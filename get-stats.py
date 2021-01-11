@@ -29,7 +29,7 @@ playerdata['Game'] = gameguid
 #playerdata
 
 #write back to csv
-playerdata.to_csv(file, sep=';', encoding='utf-8')
+playerdata.to_csv(file, sep=';', encoding='utf-8',index=False)
 
 
 
@@ -49,4 +49,4 @@ teamdata['Game'] = gameguid
 #teamdata
 
 #write back to csv
-teamdata.to_csv(file, sep=';', encoding='utf-8')
+teamdata.to_csv(file, sep=';', encoding='utf-8',index=False)
