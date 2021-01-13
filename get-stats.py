@@ -6,47 +6,67 @@ import numpy as np
 # https://ballchasing.com/?title=&player-name=pcmcd&season=&min-rank=&max-rank=&map=&replay-after=&replay-before=&upload-after=&upload-before=
 
 #download single file location
-#https://ballchasing.com/dl/stats/teams/8aee5a29-7792-4c86-8534-dce570ef214a/8aee5a29-7792-4c86-8534-dce570ef214a-team-stats.csv
 
-#download player file
-url = 'https://ballchasing.com/dl/stats/players/8aee5a29-7792-4c86-8534-dce570ef214a/8aee5a29-7792-4c86-8534-dce570ef214a-players.csv'
-file = 'stat_files/8aee5a29-7792-4c86-8534-dce570ef214a-player.csv'
-gameguid = url[41:77]
-download_file(url=url,filename=file)
+urls = []
+urls.append('37cb2c52-676a-4a07-a16f-3605e47beb6b')
+urls.append('0f11948f-e73d-448d-9a14-bc687e77156c')
+urls.append('09772d90-acc7-4692-8e2f-fbb81aaf110e')
+urls.append('5d3a843a-62c8-46a7-9bd3-c86e754e5a7d')
+urls.append('83518fa7-9bb7-41c0-b192-2c7f7e96ef40')
+urls.append('70ef7a52-6014-4ec4-8f63-63dc526338e8')
+urls.append('9d053ab6-fd45-4e29-bd90-bdba4dec0629')
+urls.append('b399c2f1-14c1-4419-9b56-2dcba8038a63')
 
-#find my row
-playerdata = pd.read_csv(file, sep=';')
-myrows = playerdata[playerdata['player name'] == 'PCMcD']
-mycolor = myrows['color'].values[0]
-#mycolor
+#initalize summary dataframes
 
-#add column to add team names for my team and opponents
-playerdata['Team'] = np.where(playerdata['color'] != mycolor,'Opponent','Rochester Riff')
-#playerdata
+for url in urls:
+    #print(url)
 
-#add column that has guid for game
-playerdata['Game'] = gameguid
-#playerdata
+    #download playerfile
+    playerfile = 'stat_files/PLAYER_'+url+'.csv'
+    fullplayerurl = 'https://ballchasing.com/dl/stats/players/'+url+'/'+url+'-players.csv'
+    download_file(url=fullplayerurl,filename=playerfile)
 
-#write back to csv
-playerdata.to_csv(file, sep=';', encoding='utf-8',index=False)
+    #find my row
+    playerdata = pd.read_csv(playerfile, sep=';')
+    #playerdata
+    myrows = playerdata[playerdata['player name'] == 'PCMcD']
+    mycolor = myrows['color'].values[0]
+    #mycolor
 
+    #add column to add team names for my team and opponents
+    playerdata['Team'] = np.where(playerdata['color'] != mycolor,'Opponent','Rochester Riff')
+    #playerdata
 
+    #add column that has guid for game
+    playerdata['Game'] = url
+    #playerdata
 
-#download team file
-url = 'https://ballchasing.com/dl/stats/teams/8aee5a29-7792-4c86-8534-dce570ef214a/8aee5a29-7792-4c86-8534-dce570ef214a-team-stats.csv'
-file = 'stat_files/8aee5a29-7792-4c86-8534-dce570ef214a-team.csv'
-download_file(url=url,filename=file)
+    #write back to csv
+    playerdata.to_csv(playerfile, sep=';', encoding='utf-8',index=False)
+    #create summary dataframe that adds all player data together
+    summaryplayerdata = playerdata.append(playerdata)
 
-teamdata = pd.read_csv(file, sep=';')
+    #download team file
+    teamfile = 'stat_files/TEAM_'+url+'.csv'
+    fullteamurl = 'https://ballchasing.com/dl/stats/teams/'+url+'/'+url+'-team-stats.csv'
+    download_file(url=fullteamurl,filename=teamfile)
 
-#add column to add team names for my team and opponents
-teamdata['Team'] = np.where(teamdata['color'] != mycolor,'Opponent','Rochester Riff')
-#teamdata
+    teamdata = pd.read_csv(teamfile, sep=';')
 
-#add column that has guid for game
-teamdata['Game'] = gameguid
-#teamdata
+    #add column to add team names for my team and opponents
+    teamdata['Team'] = np.where(teamdata['color'] != mycolor,'Opponent','Rochester Riff')
+    #teamdata
 
-#write back to csv
-teamdata.to_csv(file, sep=';', encoding='utf-8',index=False)
+    #add column that has guid for game
+    teamdata['Game'] = url
+    #teamdata
+
+    #write back to csv
+    teamdata.to_csv(teamfile, sep=';', encoding='utf-8',index=False)
+    
+    #create summaryteam dataframe that adds all data together
+    summaryteamdata = teamdata.append(teamdata)
+
+summaryplayerdata.to_csv('stat_files/PLAYERSUMMARY.csv', sep=';', encoding='utf-8',index=False)
+summaryteamdata.to_csv('stat_files/TEAMSUMMARY.csv', sep=';', encoding='utf-8',index=False)
