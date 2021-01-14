@@ -57,6 +57,26 @@ for url in urls:
     #add column that has guid for game
     teamdata['Game'] = url
 
+    #compare goals by each team to calculate winning team
+    riffgoals = teamdata[teamdata['Team'] == 'Rochester Riff']
+    riffgoals = riffgoals['goals'].values[0]
+
+    opponentgoals = teamdata[teamdata['Team'] == 'Opponent']
+    opponentgoals = opponentgoals['goals'].values[0]
+
+    #compare the two values to calculate winning team
+    if riffgoals > opponentgoals:
+        winner = 'Rochester Riff'
+    else:
+        winner = 'Opponent'
+    #print(winner)
+
+    #set result column using winner from above
+    teamdata['Result'] = ''
+    teamdata.loc[teamdata['Team'] == winner, 'Result'] = 'Win'
+    teamdata.loc[teamdata['Team'] != winner, 'Result'] = 'Loss'
+    #teamdata
+
     #write back to csv
     teamdata.to_csv(teamfile, sep=';', encoding='utf-8',index=False)
 
@@ -90,3 +110,7 @@ for filename in os.listdir(directory):
         continue
 teamsummary = pd.concat(teamli, axis=0, ignore_index=True)
 teamsummary
+
+#game summary
+gameresults = teamsummary[['Team','Game','Result']]
+gameresults
