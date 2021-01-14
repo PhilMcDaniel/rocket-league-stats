@@ -1,7 +1,26 @@
-from download import download_file
 import pandas as pd
 import numpy as np
 import os
+import requests
+
+
+
+#download method
+def download_file(url, filename):
+    ''' Downloads file from the url and save it as filename '''
+    # check if file already exists
+    if not os.path.isfile(filename):
+        print('Downloading File')
+        response = requests.get(url)
+        # Check if the response is ok (200)
+        if response.status_code == 200:
+            # Open file and write the content
+            with open(filename, 'wb') as file:
+                # A chunk of 128 bytes
+                for chunk in response:
+                    file.write(chunk)
+    else:
+        print('File exists')
 
 # all of my available replays
 # https://ballchasing.com/?title=&player-name=pcmcd&season=&min-rank=&max-rank=&map=&replay-after=&replay-before=&upload-after=&upload-before=
@@ -24,7 +43,7 @@ for url in urls:
     #print(url)
 
     #download playerfile
-    playerfile = 'stat_files/PLAYER_'+url+'.csv'
+    playerfile = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/PLAYER_'+url+'.csv'
     fullplayerurl = 'https://ballchasing.com/dl/stats/players/'+url+'/'+url+'-players.csv'
     download_file(url=fullplayerurl,filename=playerfile)
 
@@ -45,7 +64,7 @@ for url in urls:
 
 
     #download team file
-    teamfile = 'stat_files/TEAM_'+url+'.csv'
+    teamfile = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/TEAM_'+url+'.csv'
     fullteamurl = 'https://ballchasing.com/dl/stats/teams/'+url+'/'+url+'-team-stats.csv'
     download_file(url=fullteamurl,filename=teamfile)
 
@@ -82,7 +101,7 @@ for url in urls:
 
 
 
-directory = 'stat_files/'
+directory = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
 
 playerli = []
 
@@ -90,7 +109,7 @@ playerli = []
 for filename in os.listdir(directory):
     if filename.startswith("PLAYER_"):
         #print(os.path.join(directory, filename))
-        df = pd.read_csv('stat_files/'+filename, sep=';', index_col=None, header=0)
+        df = pd.read_csv(directory+filename, sep=';', index_col=None, header=0)
         playerli.append(df)
     else:
         continue
@@ -104,16 +123,19 @@ teamli = []
 for filename in os.listdir(directory):
     if filename.startswith("TEAM_"):
         #print(os.path.join(directory, filename))
-        df = pd.read_csv('stat_files/'+filename, sep=';', index_col=None, header=0)
+        df = pd.read_csv(directory+filename, sep=';', index_col=None, header=0)
         teamli.append(df)
     else:
         continue
 teamsummary = pd.concat(teamli, axis=0, ignore_index=True)
+teamsummary['Count'] = 1
 teamsummary
+
 
 #game summary
 gameresults = teamsummary[['Team','Game','Result']]
 #gameresults
 
 playersummary = pd.merge(playersummary, gameresults, on=['Team', 'Game'])
+playersummary['Count'] = 1
 playersummary
