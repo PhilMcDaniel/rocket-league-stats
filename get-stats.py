@@ -95,7 +95,7 @@ for filename in os.listdir(directory):
     else:
         continue
 playersummary = pd.concat(playerli, axis=0, ignore_index=True)
-playersummary
+#playersummary
 
 
 teamli = []
@@ -113,4 +113,7 @@ teamsummary
 
 #game summary
 gameresults = teamsummary[['Team','Game','Result']]
-gameresults
+#gameresults
+
+playersummary = pd.merge(playersummary, gameresults, on=['Team', 'Game'])
+playersummary
