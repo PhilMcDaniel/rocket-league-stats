@@ -1,6 +1,7 @@
 from download import download_file
 import pandas as pd
 import numpy as np
+import os
 
 # all of my available replays
 # https://ballchasing.com/?title=&player-name=pcmcd&season=&min-rank=&max-rank=&map=&replay-after=&replay-before=&upload-after=&upload-before=
@@ -29,23 +30,19 @@ for url in urls:
 
     #find my row
     playerdata = pd.read_csv(playerfile, sep=';')
-    #playerdata
+    
     myrows = playerdata[playerdata['player name'] == 'PCMcD']
     mycolor = myrows['color'].values[0]
-    #mycolor
-
+    
     #add column to add team names for my team and opponents
     playerdata['Team'] = np.where(playerdata['color'] != mycolor,'Opponent','Rochester Riff')
-    #playerdata
-
+    
     #add column that has guid for game
     playerdata['Game'] = url
-    #playerdata
-
+    
     #write back to csv
     playerdata.to_csv(playerfile, sep=';', encoding='utf-8',index=False)
-    #create summary dataframe that adds all player data together
-    summaryplayerdata = playerdata.append(playerdata)
+
 
     #download team file
     teamfile = 'stat_files/TEAM_'+url+'.csv'
@@ -56,17 +53,40 @@ for url in urls:
 
     #add column to add team names for my team and opponents
     teamdata['Team'] = np.where(teamdata['color'] != mycolor,'Opponent','Rochester Riff')
-    #teamdata
 
     #add column that has guid for game
     teamdata['Game'] = url
-    #teamdata
 
     #write back to csv
     teamdata.to_csv(teamfile, sep=';', encoding='utf-8',index=False)
-    
-    #create summaryteam dataframe that adds all data together
-    summaryteamdata = teamdata.append(teamdata)
 
-summaryplayerdata.to_csv('stat_files/PLAYERSUMMARY.csv', sep=';', encoding='utf-8',index=False)
-summaryteamdata.to_csv('stat_files/TEAMSUMMARY.csv', sep=';', encoding='utf-8',index=False)
+
+
+directory = 'stat_files/'
+
+playerli = []
+
+# loop through player files and add to data frame
+for filename in os.listdir(directory):
+    if filename.startswith("PLAYER_"):
+        #print(os.path.join(directory, filename))
+        df = pd.read_csv('stat_files/'+filename, sep=';', index_col=None, header=0)
+        playerli.append(df)
+    else:
+        continue
+playersummary = pd.concat(playerli, axis=0, ignore_index=True)
+playersummary
+
+
+teamli = []
+
+# loop through team files and add to data frame
+for filename in os.listdir(directory):
+    if filename.startswith("TEAM_"):
+        #print(os.path.join(directory, filename))
+        df = pd.read_csv('stat_files/'+filename, sep=';', index_col=None, header=0)
+        teamli.append(df)
+    else:
+        continue
+teamsummary = pd.concat(teamli, axis=0, ignore_index=True)
+teamsummary
