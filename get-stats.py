@@ -28,10 +28,10 @@ def download_file(url, filename):
 #download single file location
 
 urls = []
-urls.append('b76a4b9b-4ee5-4acf-932c-0fa552d3df07')
-urls.append('4ba80221-4a36-4b3d-a11d-d808c3f51836')
-urls.append('3c1bede4-0449-42ed-b4e6-9a20cb3cdc23')
-urls.append('bfc92b44-3310-4bf1-99da-e4018b958f33')
+urls.append('708f160c-bd3b-435f-aeb9-ac9c7eb618c9')
+urls.append('b7b86822-30df-4652-b4d4-26df4b564e7e')
+urls.append('02bcc596-2b0e-43d3-b594-086e1f689952')
+
 
 
 #initalize summary dataframes
