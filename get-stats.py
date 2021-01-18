@@ -150,4 +150,23 @@ gameresults = teamsummary[['color','Game','Result']]
 
 playersummary = pd.merge(playersummary, gameresults, on=['color', 'Game'])
 playersummary['Count'] = 1
+#playersummary[playersummary['Game']=='af5b73e4-322f-43f2-9df9-7b160bfed936']
+
+#take only wins
+playerwins = playersummary[playersummary['Result'] == 'Win']
+playerwins = playerwins[['color','score','Game']]
+
+#find max score per color, game
+mvpbygame = playerwins.groupby(['color','Game']).max()
+#mvpbygame
+
+#join back to playersummary on game, color, maxscore
+playersummary = pd.merge(playersummary, mvpbygame,how='left', on=['color', 'Game'])
+#add column for MPV where the score matches the max score from winning team
+playersummary['MVP'] = np.where(playersummary['score_x'] == playersummary['score_y'],'Yes','No')
+
+#drop column score_y
+playersummary = playersummary.drop(columns='score_y')
+#rename column score_x to score
+playersummary.rename(columns={'score_x':'score'},inplace=True)
 playersummary
