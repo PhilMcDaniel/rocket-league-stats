@@ -28,24 +28,14 @@ def download_file(url, filename):
 #download single file location
 
 urls = []
-urls.append('147ef616-0ce1-4097-97dd-20b8b5f8f066')
-urls.append('c7009825-6208-45c0-8be4-231625ec1a73')
-urls.append('40d8ed32-f4dc-4d45-8230-634835369496')
-urls.append('2193f1f1-7c8b-4af0-a56e-0c9be4a05122')
-urls.append('979105a3-d736-41e2-b86f-fc8f95a78b05')
-urls.append('c79da405-a413-47ca-8d39-d6c28e44842a')
-urls.append('a6fd63d3-fd4e-4773-b728-8febac13ab85')
-urls.append('d576c305-6485-47c8-9113-a26d2b431608')
-urls.append('6acfc176-430b-4d99-b3f4-d3f720cf6f52')
-urls.append('aa3a6016-4cea-4f11-9689-4f9c33abd2f0')
-urls.append('1f6b28b4-11d1-49da-93aa-6d15141fdb45')
-urls.append('d81ed040-9554-4932-b211-045d6a4a7b18')
-urls.append('71175c21-caf3-4214-8db7-54840f352e29')
-urls.append('5569316f-f11a-4973-abbd-164dca191abb')
-urls.append('ccde16ef-58cc-4602-a932-dd9d2ec7cae6')
-urls.append('f10724a3-156c-427c-8ec7-d0aea776555c')
-urls.append('af5b73e4-322f-43f2-9df9-7b160bfed936')
-urls.append('ba0f0aa7-3d7c-42b6-aa0d-2955b9e24b39')
+urls.append('8646c892-b61c-4508-85ed-ea84debea4f6')
+urls.append('9d379e43-1fa7-4dee-9fa4-b401cd7386ce')
+urls.append('b40638dc-6b6f-4ca3-b904-33022cf33037')
+urls.append('be52e085-e6df-4061-8931-af293f306da2')
+urls.append('a75dd6d3-0d88-4da9-aea3-661207b2137e')
+urls.append('e5baf9d9-499a-44a8-9063-39771bbe060b')
+urls.append('a4dc8bec-643a-4cdc-8956-e0fdb39a87c6')
+urls.append('f6a11545-62f6-474c-b92a-8da7a1e2d6f4')
 
 
 
