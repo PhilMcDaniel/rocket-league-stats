@@ -28,14 +28,12 @@ def download_file(url, filename):
 #download single file location
 
 urls = []
-urls.append('8646c892-b61c-4508-85ed-ea84debea4f6')
-urls.append('9d379e43-1fa7-4dee-9fa4-b401cd7386ce')
-urls.append('b40638dc-6b6f-4ca3-b904-33022cf33037')
-urls.append('be52e085-e6df-4061-8931-af293f306da2')
-urls.append('a75dd6d3-0d88-4da9-aea3-661207b2137e')
-urls.append('e5baf9d9-499a-44a8-9063-39771bbe060b')
-urls.append('a4dc8bec-643a-4cdc-8956-e0fdb39a87c6')
-urls.append('f6a11545-62f6-474c-b92a-8da7a1e2d6f4')
+urls.append('7dc98c4e-6406-495c-9a3b-65c8a3e6b506')
+urls.append('8bf10bbe-9a9b-43c3-988d-d6c5c9187b16')
+urls.append('774e81d0-7875-4b98-94ba-e65ebe98391e')
+urls.append('c313b774-aef0-4a4d-ba58-b7722f8697f5')
+urls.append('a1e6175c-435c-4a10-aa13-354745b96ff2')
+
 
 
 
