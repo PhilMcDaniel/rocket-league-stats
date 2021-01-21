@@ -97,12 +97,11 @@ for url in urls:
         ,"ST. PAUL","ST. PAUL","ST. PAUL"
         ,"BLOOMINGTON","BLOOMINGTON"
         ,"BURNSVILLE","BURNSVILLE"
-        ,"BEMIDJI","BEAVERS"
+        ,"BEMIDJI","BEMIDJI"
     ]
     
-
     teamdata['team name'] = np.select(inputs,outputs)
-    teamdata
+    #teamdata
 
     #add column that has guid for game
     teamdata['Game'] = url
@@ -164,7 +163,7 @@ teamsummary
 
 
 #game summary
-gameresults = teamsummary[['color','Game','Result']]
+gameresults = teamsummary[['color','Game','Result','team name']]
 #gameresults
 
 playersummary = pd.merge(playersummary, gameresults, on=['color', 'Game'])
@@ -188,4 +187,9 @@ playersummary['MVP'] = np.where(playersummary['score_x'] == playersummary['score
 playersummary = playersummary.drop(columns='score_y')
 #rename column score_x to score
 playersummary.rename(columns={'score_x':'score'},inplace=True)
+
+#drop column team name_x
+playersummary = playersummary.drop(columns='team name_x')
+#rename column team name_y to team name
+playersummary.rename(columns={'team name_y':'team name'},inplace=True)
 playersummary
