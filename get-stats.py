@@ -88,11 +88,13 @@ for url in urls:
     playerinputs = [
          playerdata['player name'].str.upper() == "ZIM"
          ,playerdata['player name'].str.upper() == "DICEY #WE<3ZBRUH"
+         ,playerdata['player name'].str.upper() == "TARR_RL DEMOS ONLY"
          ,True
     ]
     playeroutputs = [
         "iChaotic"
         ,"Dicey"
+        ,"Tarr_RL"
         ,playerdata['player name']
     ]
     
