@@ -128,7 +128,7 @@ for url in urls:
         ,teamdata['team name'].str.upper() == "MINNEAPOLIS", teamdata['team name'].str.upper() == 'PRODIGIES'
         ,teamdata['team name'].str.upper() == "ST. CLOUD", teamdata['team name'].str.upper() == "ST CLOUD", teamdata['team name'].str.upper() == 'SOAR'
         ,teamdata['team name'].str.upper() == "ST. PAUL", teamdata['team name'].str.upper() == "ST PAUL", teamdata['team name'].str.upper() == 'KINGPINS'
-        ,teamdata['team name'].str.upper() == "BLOOMINGTON", teamdata['team name'].str.upper() == 'URSAS'
+        ,teamdata['team name'].str.upper() == "BLOOMINGTON", teamdata['team name'].str.upper() == 'URSAS', teamdata['team name'].str.upper() == 'BOOSTY BOYS' 
         ,teamdata['team name'].str.upper() == "BURNSVILLE", teamdata['team name'].str.upper() == 'FIRESTORM'
         ,teamdata['team name'].str.upper() == "BEMIDJI", teamdata['team name'].str.upper() == 'BEAVERS'
         ,True
@@ -141,7 +141,7 @@ for url in urls:
         ,"MINNEAPOLIS","MINNEAPOLIS"
         ,"ST. CLOUD","ST. CLOUD","ST. CLOUD"
         ,"ST. PAUL","ST. PAUL","ST. PAUL"
-        ,"BLOOMINGTON","BLOOMINGTON"
+        ,"BLOOMINGTON","BLOOMINGTON","BLOOMINGTON"
         ,"BURNSVILLE","BURNSVILLE"
         ,"BEMIDJI","BEMIDJI"
         ,teamdata['team name']
