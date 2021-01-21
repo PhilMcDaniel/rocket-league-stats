@@ -73,6 +73,37 @@ for url in urls:
     #add column to add team names for my team and opponents
     #teamdata['Team'] = np.where(teamdata['color'] != mycolor,'Opponent','Rochester Riff')
 
+
+    #override team names for consistency
+    inputs = [
+         teamdata['team name'].str.upper() == "DULUTH", teamdata['team name'].str.upper() == 'SPIRIT'
+        ,teamdata['team name'].str.upper() == "ROCHESTER", teamdata['team name'].str.upper() == 'RIFF'
+        ,teamdata['team name'].str.upper() == "MINNETONKA", teamdata['team name'].str.upper() == 'BONZERS'
+        ,teamdata['team name'].str.upper() == "HIBBING", teamdata['team name'].str.upper() == 'WARDENS'
+        ,teamdata['team name'].str.upper() == "MINNEAPOLIS", teamdata['team name'].str.upper() == 'PRODIGIES'
+        ,teamdata['team name'].str.upper() == "ST. CLOUD", teamdata['team name'].str.upper() == "ST CLOUD", teamdata['team name'].str.upper() == 'SOAR'
+        ,teamdata['team name'].str.upper() == "ST. PAUL", teamdata['team name'].str.upper() == "ST PAUL", teamdata['team name'].str.upper() == 'KINGPINS'
+        ,teamdata['team name'].str.upper() == "BLOOMINGTON", teamdata['team name'].str.upper() == 'URSAS'
+        ,teamdata['team name'].str.upper() == "BURNSVILLE", teamdata['team name'].str.upper() == 'FIRESTORM'
+        ,teamdata['team name'].str.upper() == "BEMIDJI", teamdata['team name'].str.upper() == 'BEAVERS'
+    ]
+    outputs = [
+        "DULUTH","DULUTH"
+        ,"ROCHESTER","ROCHESTER"
+        ,"MINNETONKA","MINNETONKA"
+        ,"HIBBING","HIBBING"
+        ,"MINNEAPOLIS","MINNEAPOLIS"
+        ,"ST. CLOUD","ST. CLOUD","ST. CLOUD"
+        ,"ST. PAUL","ST. PAUL","ST. PAUL"
+        ,"BLOOMINGTON","BLOOMINGTON"
+        ,"BURNSVILLE","BURNSVILLE"
+        ,"BEMIDJI","BEAVERS"
+    ]
+    
+
+    teamdata['team name'] = np.select(inputs,outputs)
+    teamdata
+
     #add column that has guid for game
     teamdata['Game'] = url
 
