@@ -28,6 +28,17 @@ def download_file(url, filename):
 #download single file location
 
 urls = []
+#1/8 CLMN preseason tournament
+urls.append('dbcb5251-b75c-4e29-a161-38ebde9418d9')
+urls.append('9eda6262-6fea-46e2-aa7e-ab4a6d82d0ba')
+urls.append('79975f63-9f7e-4120-8102-86bce529bce1')
+urls.append('ce507231-65a6-445f-b71f-576529926950')
+urls.append('b0bccf89-964c-4006-80f9-a60054198e61')
+urls.append('c71bf073-889f-4a2d-81bb-e2923ba1bf32')
+urls.append('46ad1fb8-ef84-4246-9d72-87cb8962d5b3')
+urls.append('3fa94855-8e96-4de4-aaea-3ccccf60cf72')
+urls.append('0b8405e7-24d4-426c-a18f-a3661ba02aae')
+
 #1/11 boosty boys scrim
 urls.append('b399c2f1-14c1-4419-9b56-2dcba8038a63')
 urls.append('9d053ab6-fd45-4e29-bd90-bdba4dec0629')
