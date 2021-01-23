@@ -82,23 +82,23 @@ urls.append([['1fe48305-2676-40ea-bc68-cff9541dcb85'],['Week 0'],['Preseason']])
 
 
 #1/22 CLMN Regular Season week 1
-urls.append([['de9d9a41-7a06-4084-8093-b43ab2ea3d67'],['Week 1'],['Regular Season']])
-urls.append([['38d4dd5d-6cf3-4554-a826-da2e070776ec'],['Week 1'],['Regular Season']])
-urls.append([['5c708b5a-2330-4edf-81ed-ba5946be4c5d'],['Week 1'],['Regular Season']])
-urls.append([['4ff7d3ce-cfab-49c3-8f96-111ac96c5481'],['Week 1'],['Regular Season']])
-urls.append([['d3cac342-a727-407b-8007-e93364c4b24a'],['Week 1'],['Regular Season']])
-urls.append([['76bc0f03-373b-41ce-a47a-953db7dbcd93'],['Week 1'],['Regular Season']])
-urls.append([['de3321cd-253a-42dd-b60c-b129785961d7'],['Week 1'],['Regular Season']])
-urls.append([['0ac4f9ee-9bd6-432c-8386-e2359834c365'],['Week 1'],['Regular Season']])
-urls.append([['d4e5f817-0325-4ed1-bf42-b0b46fcd2718'],['Week 1'],['Regular Season']])
-urls.append([['938ed5ec-298e-493e-bd08-9cd6681145d1'],['Week 1'],['Regular Season']])
-urls.append([['d768f0eb-d370-4318-8edd-114c67f0e5a5'],['Week 1'],['Regular Season']])
-urls.append([['049b5978-7c06-461a-b0d9-3c86033692f2'],['Week 1'],['Regular Season']])
-urls.append([['605e8fa3-5537-4d7b-8803-81fa037a59af'],['Week 1'],['Regular Season']])
-urls.append([['f01338af-b445-4297-bf1c-7fbd39c8b05b'],['Week 1'],['Regular Season']])
-urls.append([['321d66b0-4593-4afe-a926-9222d6959265'],['Week 1'],['Regular Season']])
-urls.append([['2f95aa02-65a5-4d22-9d85-39bd8cd8a4dc'],['Week 1'],['Regular Season']])
-urls.append([['616e136b-a899-429a-a29b-cd4b6f1acce4'],['Week 1'],['Regular Season']])
+urls.append([['de9d9a41-7a06-4084-8093-b43ab2ea3d67'],['Week 1'],['Regular Season'],['Series 1']])
+urls.append([['38d4dd5d-6cf3-4554-a826-da2e070776ec'],['Week 1'],['Regular Season'],['Series 1']])
+urls.append([['5c708b5a-2330-4edf-81ed-ba5946be4c5d'],['Week 1'],['Regular Season'],['Series 1']])
+urls.append([['4ff7d3ce-cfab-49c3-8f96-111ac96c5481'],['Week 1'],['Regular Season'],['Series 2']])
+urls.append([['d3cac342-a727-407b-8007-e93364c4b24a'],['Week 1'],['Regular Season'],['Series 2']])
+urls.append([['76bc0f03-373b-41ce-a47a-953db7dbcd93'],['Week 1'],['Regular Season'],['Series 2']])
+urls.append([['de3321cd-253a-42dd-b60c-b129785961d7'],['Week 1'],['Regular Season'],['Series 2']])
+urls.append([['0ac4f9ee-9bd6-432c-8386-e2359834c365'],['Week 1'],['Regular Season'],['Series 2']])
+urls.append([['d4e5f817-0325-4ed1-bf42-b0b46fcd2718'],['Week 1'],['Regular Season'],['Series 3']])
+urls.append([['938ed5ec-298e-493e-bd08-9cd6681145d1'],['Week 1'],['Regular Season'],['Series 3']])
+urls.append([['d768f0eb-d370-4318-8edd-114c67f0e5a5'],['Week 1'],['Regular Season'],['Series 3']])
+urls.append([['049b5978-7c06-461a-b0d9-3c86033692f2'],['Week 1'],['Regular Season'],['Series 4']])
+urls.append([['605e8fa3-5537-4d7b-8803-81fa037a59af'],['Week 1'],['Regular Season'],['Series 4']])
+urls.append([['f01338af-b445-4297-bf1c-7fbd39c8b05b'],['Week 1'],['Regular Season'],['Series 4']])
+urls.append([['321d66b0-4593-4afe-a926-9222d6959265'],['Week 1'],['Regular Season'],['Series 5']])
+urls.append([['2f95aa02-65a5-4d22-9d85-39bd8cd8a4dc'],['Week 1'],['Regular Season'],['Series 5']])
+urls.append([['616e136b-a899-429a-a29b-cd4b6f1acce4'],['Week 1'],['Regular Season'],['Series 5']])
 
 #print(urls)
 
@@ -108,7 +108,7 @@ for url in urls:
     #print(url)
 
     #download playerfile
-    playerfile = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/PLAYER_'+url[0][0]+'.csv'
+    playerfile = 'C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/PLAYER_'+url[0][0]+'.csv'
     fullplayerurl = 'https://ballchasing.com/dl/stats/players/'+url[0][0]+'/'+url[0][0]+'-players.csv'
     download_file(url=fullplayerurl,filename=playerfile)
 
@@ -146,7 +146,7 @@ for url in urls:
 
 
     #download team file
-    teamfile = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/TEAM_'+url[0][0]+'.csv'
+    teamfile = 'C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/TEAM_'+url[0][0]+'.csv'
     fullteamurl = 'https://ballchasing.com/dl/stats/teams/'+url[0][0]+'/'+url[0][0]+'-team-stats.csv'
     download_file(url=fullteamurl,filename=teamfile)
 
@@ -196,6 +196,9 @@ for url in urls:
     #add column for week number
     teamdata['Week Number'] = url[1][0]
 
+    #add column for week number
+    teamdata['Series Number'] = url[3][0]
+
     #compare goals by each team to calculate winning team
     bluegoals = teamdata[teamdata['color'] == 'blue']
     bluegoals = bluegoals['goals'].values[0]
@@ -221,7 +224,7 @@ for url in urls:
 
 
 
-directory = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
+directory = 'C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
 
 playerli = []
 
