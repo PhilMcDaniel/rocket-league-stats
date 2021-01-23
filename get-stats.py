@@ -82,6 +82,13 @@ urls.append('774e81d0-7875-4b98-94ba-e65ebe98391e')
 urls.append('8bf10bbe-9a9b-43c3-988d-d6c5c9187b16')
 urls.append('7dc98c4e-6406-495c-9a3b-65c8a3e6b506')
 
+#1/22 minnetonka scrim
+urls.append('e5f81d7f-786e-42b3-859a-582579551f86')
+urls.append('d690b8be-b3ab-4479-8fde-0d5acc635624')
+urls.append('e11f9f67-e39a-4325-990a-39d8678861d8')
+urls.append('1fe48305-2676-40ea-bc68-cff9541dcb85')
+
+
 #initalize summary dataframes
 
 for url in urls:
