@@ -100,6 +100,12 @@ urls.append([['321d66b0-4593-4afe-a926-9222d6959265'],['Week 1'],['Regular Seaso
 urls.append([['2f95aa02-65a5-4d22-9d85-39bd8cd8a4dc'],['Week 1'],['Regular Season'],['Series 5'],['2020-01-22']])
 urls.append([['616e136b-a899-429a-a29b-cd4b6f1acce4'],['Week 1'],['Regular Season'],['Series 5'],['2020-01-22']])
 
+#1/25 Minneaplolis scrim
+urls.append([['3354615d-2a5f-49bd-9f31-f1a3c85ed535'],['Week 0'],['Preseason'],['Series 1'],['2020-01-25']])
+urls.append([['0ea28777-186b-4f31-bf0b-1de444bac563'],['Week 0'],['Preseason'],['Series 1'],['2020-01-25']])
+urls.append([['ac7346e3-9851-430a-b36b-08f1a94739ca'],['Week 0'],['Preseason'],['Series 1'],['2020-01-25']])
+urls.append([['c741e3ac-150d-432d-8e94-37496cecd5c4'],['Week 0'],['Preseason'],['Series 1'],['2020-01-25']])
+
 #print(urls)
 
 #initalize summary dataframes
