@@ -126,9 +126,9 @@ for url in urls:
          playerdata['player name'].str.upper() == "ZIM"
          ,playerdata['player name'].str.upper() == "DICEY #WE<3ZBRUH"
          ,playerdata['player name'].str.upper() == "TARR_RL DEMOS ONLY"
-         ,playerdata['player name'].str.upper() == "M8ItsNate"
-         ,playerdata['player name'].str.upper() == "KING Wastee"
-         ,playerdata['player name'].str.upper() == "El Bloop :D"
+         ,playerdata['player name'].str.upper() == "M8ITSNATE"
+         ,playerdata['player name'].str.upper() == "KING WASTEE"
+         ,playerdata['player name'].str.upper() == "EL BLOOP :D"
          ,True
     ]
     playeroutputs = [
@@ -304,3 +304,4 @@ playersummary.rename(columns={'score_x':'score'},inplace=True)
 playersummary = playersummary.drop(columns='team name_x')
 #rename column team name_y to team name
 playersummary.rename(columns={'team name_y':'team name'},inplace=True)
+playersummary
