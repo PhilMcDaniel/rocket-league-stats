@@ -304,4 +304,3 @@ playersummary.rename(columns={'score_x':'score'},inplace=True)
 playersummary = playersummary.drop(columns='team name_x')
 #rename column team name_y to team name
 playersummary.rename(columns={'team name_y':'team name'},inplace=True)
-playersummary[playersummary['player name'] == 'KING Wastee']
