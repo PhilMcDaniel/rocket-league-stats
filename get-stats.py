@@ -114,6 +114,28 @@ urls.append([['9734307a-9b1c-4395-9be1-494edfb477df'],['Week 0'],['Preseason'],[
 urls.append([['e94d94e1-b932-4da9-aa84-a11138eab354'],['Week 0'],['Preseason'],['Series 10'],['2020-01-28']])
 urls.append([['ec235323-7a44-4fa9-bf29-3ead72271b20'],['Week 0'],['Preseason'],['Series 10'],['2020-01-28']])
 
+#1/29 CLMN Regular Season week 2
+urls.append([['71cdcd8c-9c84-4a17-8c46-03d747998223'],['Week 2'],['Regular Season'],['Series 1'],['2020-01-29']])
+urls.append([['5c620611-5779-4715-9186-a518e9c722ae'],['Week 2'],['Regular Season'],['Series 1'],['2020-01-29']])
+urls.append([['89d215ab-a6c8-4264-a5d7-f35b0a892bc0'],['Week 2'],['Regular Season'],['Series 1'],['2020-01-29']])
+urls.append([['7f5bc46a-e482-47f3-b914-74d6c4537b55'],['Week 2'],['Regular Season'],['Series 1'],['2020-01-29']])
+urls.append([['ad9e2c7d-762f-442e-9d5c-049cec70b491'],['Week 2'],['Regular Season'],['Series 1'],['2020-01-29']])
+urls.append([['b80f87fc-c224-4305-a52b-6b3dc79ae21c'],['Week 2'],['Regular Season'],['Series 2'],['2020-01-29']])
+urls.append([['c6ae7701-1468-4820-ab9d-500d3fb13927'],['Week 2'],['Regular Season'],['Series 2'],['2020-01-29']])
+urls.append([['83db2fd0-d488-466b-8867-0de7a1371d70'],['Week 2'],['Regular Season'],['Series 2'],['2020-01-29']])
+urls.append([['5ec0e6ae-010e-4aed-8328-5c50b424e306'],['Week 2'],['Regular Season'],['Series 3'],['2020-01-29']])
+urls.append([['8ce764a0-3780-4d5c-b9a7-f169994ae815'],['Week 2'],['Regular Season'],['Series 3'],['2020-01-29']])
+urls.append([['3f77eef0-6ea5-4d4e-9feb-3c8c6528b42b'],['Week 2'],['Regular Season'],['Series 3'],['2020-01-29']])
+urls.append([['e266f1f8-86c3-40bd-83d4-28b9d2c127fa'],['Week 2'],['Regular Season'],['Series 3'],['2020-01-29']])
+urls.append([['a4e5f41b-08d7-47c4-a254-17faad068e90'],['Week 2'],['Regular Season'],['Series 4'],['2020-01-29']])
+urls.append([['bdfa668a-eb0d-4ddc-8ee3-04f152d2dd19'],['Week 2'],['Regular Season'],['Series 4'],['2020-01-29']])
+urls.append([['14149ca9-4687-48ac-9bcd-18a92fe9df71'],['Week 2'],['Regular Season'],['Series 4'],['2020-01-29']])
+urls.append([['9701370c-565f-4ea3-9e67-c306e1ca1e54'],['Week 2'],['Regular Season'],['Series 4'],['2020-01-29']])
+urls.append([['38b3c6d1-6dad-4b50-942f-d12c8d49aa0f'],['Week 2'],['Regular Season'],['Series 5'],['2020-01-29']])
+urls.append([['4c344ba0-c2e8-4947-a0ce-d20857b06553'],['Week 2'],['Regular Season'],['Series 5'],['2020-01-29']])
+urls.append([['4e379a51-cbc6-4a41-950b-4a64846272a2'],['Week 2'],['Regular Season'],['Series 5'],['2020-01-29']])
+urls.append([['b4559c66-a375-4b35-b656-c72854870233'],['Week 2'],['Regular Season'],['Series 5'],['2020-01-29']])
+
 #print(urls)
 
 #initalize summary dataframes
