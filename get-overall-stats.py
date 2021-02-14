@@ -5,8 +5,8 @@ import requests
 import time
 
 
-#directory = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
-directory = 'C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
+directory = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
+#directory = 'C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
 
 playerli = []
 
@@ -35,7 +35,8 @@ for filename in os.listdir(directory):
 teamsummary = pd.concat(teamli, axis=0, ignore_index=True)
 teamsummary['Count'] = 1
 teamsummary
-
+#write overall to csv
+teamsummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNTeamSummary.csv', sep=';', encoding='utf-8',index=False)
 
 #game summary
 gameresults = teamsummary[['color','Game','Result','team name','Week Number','Series Number','Count']]
@@ -60,7 +61,12 @@ series_matchup['Series Color Winner'] = np.where(series_matchup['Blue Match Wins
 series_matchup['Series Win Count'] = np.where(series_matchup['color_x'] == series_matchup['Series Color Winner'],1,0)
 #add count column for series loser
 series_matchup['Series Loss Count'] = np.where(series_matchup['color_x'] != series_matchup['Series Color Winner'],1,0)
+series_matchup = series_matchup.loc[series_matchup["Week Number"]!="Week 0"].groupby("team name_x").sum().reset_index()
 series_matchup
+
+#write overall to csv
+series_matchup.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNSeriesRecord.csv', sep=';', encoding='utf-8',index=False)
+
 
 playersummary = pd.merge(playersummary, gameresults, on=['color', 'Game'])
 playersummary['Count'] = 1
@@ -89,3 +95,5 @@ playersummary = playersummary.drop(columns='team name_x')
 #rename column team name_y to team name
 playersummary.rename(columns={'team name_y':'team name'},inplace=True)
 playersummary
+#write overall to csv
+playersummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNPlayerSummary.csv', sep=';', encoding='utf-8',index=False)

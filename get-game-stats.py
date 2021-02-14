@@ -177,8 +177,8 @@ for url in urls:
     #print(url)
 
     #download playerfile
-    playerfile = 'C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/PLAYER_'+url[0][0]+'.csv'
-    #playerfile = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/PLAYER_'+url[0][0]+'.csv'
+    #playerfile = 'C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/PLAYER_'+url[0][0]+'.csv'
+    playerfile = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/PLAYER_'+url[0][0]+'.csv'
     fullplayerurl = 'https://ballchasing.com/dl/stats/players/'+url[0][0]+'/'+url[0][0]+'-players.csv'
     download_file(url=fullplayerurl,filename=playerfile)
 
@@ -232,8 +232,8 @@ for url in urls:
 
 
     #download team file
-    teamfile = 'C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/TEAM_'+url[0][0]+'.csv'
-    #teamfile = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/TEAM_'+url[0][0]+'.csv'
+    #teamfile = 'C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/TEAM_'+url[0][0]+'.csv'
+    teamfile = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/TEAM_'+url[0][0]+'.csv'
     fullteamurl = 'https://ballchasing.com/dl/stats/teams/'+url[0][0]+'/'+url[0][0]+'-team-stats.csv'
     download_file(url=fullteamurl,filename=teamfile)
 
