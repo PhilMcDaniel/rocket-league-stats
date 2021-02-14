@@ -5,7 +5,8 @@ import requests
 import time
 
 
-directory = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
+#directory = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
+directory = 'C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
 
 playerli = []
 
@@ -37,8 +38,29 @@ teamsummary
 
 
 #game summary
-gameresults = teamsummary[['color','Game','Result','team name','Week Number','Series Number']]
-gameresults
+gameresults = teamsummary[['color','Game','Result','team name','Week Number','Series Number','Count']]
+
+#get unique combinations
+series_matchup = gameresults[['color','team name','Week Number','Series Number']].value_counts().reset_index(name='Games In Series')
+
+#calculate wins for each combination
+blue_wins = gameresults[['color','team name','Week Number','Series Number']].loc[(gameresults["Result"]=="Win") & (gameresults["color"]=="blue")].value_counts().reset_index(name='Blue Match Wins')
+orange_wins = gameresults[['color','team name','Week Number','Series Number']].loc[(gameresults["Result"]=="Win") & (gameresults["color"]=="orange")].value_counts().reset_index(name='Orange Match Wins')
+#join back to store result 
+series_matchup = pd.merge(series_matchup,blue_wins,how="left" ,on=['Week Number','Series Number'])
+series_matchup = pd.merge(series_matchup,orange_wins,how="left" ,on=['Week Number','Series Number'])
+
+#fill in NaN with 0
+series_matchup['Blue Match Wins'] = series_matchup['Blue Match Wins'].fillna(0)
+series_matchup['Orange Match Wins'] = series_matchup['Orange Match Wins'].fillna(0)
+
+#add column for color of series winner
+series_matchup['Series Color Winner'] = np.where(series_matchup['Blue Match Wins'] > series_matchup['Orange Match Wins'],'blue','orange')
+#add count column for series winner
+series_matchup['Series Win Count'] = np.where(series_matchup['color_x'] == series_matchup['Series Color Winner'],1,0)
+#add count column for series loser
+series_matchup['Series Loss Count'] = np.where(series_matchup['color_x'] != series_matchup['Series Color Winner'],1,0)
+series_matchup
 
 playersummary = pd.merge(playersummary, gameresults, on=['color', 'Game'])
 playersummary['Count'] = 1
