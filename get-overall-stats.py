@@ -1,0 +1,69 @@
+import pandas as pd
+import numpy as np
+import os
+import requests
+import time
+
+
+directory = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
+
+playerli = []
+
+# loop through player files and add to data frame
+for filename in os.listdir(directory):
+    if filename.startswith("PLAYER_"):
+        #print(os.path.join(directory, filename))
+        df = pd.read_csv(directory+filename, sep=';', index_col=None, header=0)
+        playerli.append(df)
+    else:
+        continue
+playersummary = pd.concat(playerli, axis=0, ignore_index=True)
+#playersummary
+
+
+teamli = []
+
+# loop through team files and add to data frame
+for filename in os.listdir(directory):
+    if filename.startswith("TEAM_"):
+        #print(os.path.join(directory, filename))
+        df = pd.read_csv(directory+filename, sep=';', index_col=None, header=0)
+        teamli.append(df)
+    else:
+        continue
+teamsummary = pd.concat(teamli, axis=0, ignore_index=True)
+teamsummary['Count'] = 1
+teamsummary
+
+
+#game summary
+gameresults = teamsummary[['color','Game','Result','team name','Week Number','Series Number']]
+gameresults
+
+playersummary = pd.merge(playersummary, gameresults, on=['color', 'Game'])
+playersummary['Count'] = 1
+#playersummary[playersummary['Game']=='af5b73e4-322f-43f2-9df9-7b160bfed936']
+
+#take only wins for MVP calculation
+playerwins = playersummary[playersummary['Result'] == 'Win']
+playerwins = playerwins[['color','score','Game']]
+
+#find max score per color, game
+mvpbygame = playerwins.groupby(['color','Game']).max()
+#mvpbygame
+
+#join back to playersummary on game, color, maxscore
+playersummary = pd.merge(playersummary, mvpbygame,how='left', on=['color', 'Game'])
+#add column for MVP where the score matches the max score from winning team
+playersummary['MVP'] = np.where(playersummary['score_x'] == playersummary['score_y'],'Yes','No')
+
+#drop column score_y
+playersummary = playersummary.drop(columns='score_y')
+#rename column score_x to score
+playersummary.rename(columns={'score_x':'score'},inplace=True)
+
+#drop column team name_x
+playersummary = playersummary.drop(columns='team name_x')
+#rename column team name_y to team name
+playersummary.rename(columns={'team name_y':'team name'},inplace=True)
+playersummary
