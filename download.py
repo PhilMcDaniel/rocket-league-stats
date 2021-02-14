@@ -1,5 +1,6 @@
 import os
 import requests
+import time
 
 #download method
 def download_file(url, filename):
