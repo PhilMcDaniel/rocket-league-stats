@@ -75,7 +75,7 @@ series_matchup = series_matchup.append(pd.DataFrame(forfeits, columns=series_mat
 #roll up to 1 row per team with sum of wins/losses
 series_matchup = series_matchup.loc[series_matchup["Week Number"] !="Week 0"]
 
-series_matchup = series_matchup.groupby("team name_x")['Series Win Count','Series Loss Count'].sum().reset_index()
+series_matchup = series_matchup.groupby("team name_x")['Series Win Count','Series Loss Count'].sum().sort_values(by=['Series Win Count'],ascending=False).reset_index()
 series_matchup
 
 #write overall to csv
