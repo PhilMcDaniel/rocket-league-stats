@@ -61,7 +61,21 @@ series_matchup['Series Color Winner'] = np.where(series_matchup['Blue Match Wins
 series_matchup['Series Win Count'] = np.where(series_matchup['color_x'] == series_matchup['Series Color Winner'],1,0)
 #add count column for series loser
 series_matchup['Series Loss Count'] = np.where(series_matchup['color_x'] != series_matchup['Series Color Winner'],1,0)
-series_matchup = series_matchup.loc[series_matchup["Week Number"]!="Week 0"].groupby("team name_x").sum().reset_index()
+
+#Add rows to account for forfeits. Each series forfeit needs two rows, 1 for winning team, 1 for losing team.
+forfeits = []
+forfeits.append(['blue','BLOOMINGTON','Week 3','Series 4',0,'blue','BLOOMINGTON',0.0,'orange','ST. PAUL',0,'blue',1,0])
+forfeits.append(['orange','ST. PAUL','Week 3','Series 4',0,'orange','ST. PAUL',0.0,'blue','BLOOMINGTON',0,'blue',0,1])
+forfeits.append(['blue','ST. CLOUD','Week 4','Series 1',0,'blue','ST. CLOUD',0.0,'orange','HIBBING',0,'blue',1,0])
+forfeits.append(['orange','HIBBING','Week 4','Series 1',0,'orange','HIBBING',0.0,'blue','ST. CLOUD',0,'blue',0,1])
+#forfeits
+
+series_matchup = series_matchup.append(pd.DataFrame(forfeits, columns=series_matchup.columns),ignore_index=True)
+
+#roll up to 1 row per team with sum of wins/losses
+series_matchup = series_matchup.loc[series_matchup["Week Number"] !="Week 0"]
+
+series_matchup = series_matchup.groupby("team name_x")['Series Win Count','Series Loss Count'].sum().reset_index()
 series_matchup
 
 #write overall to csv
