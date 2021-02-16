@@ -2,16 +2,19 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>MN Championship Series Stats</title>
   </head>
   <body>
     <h1> Header 1 </h1>
     <p>
+      Start of paragraph</br>
       <a href="http://127.0.0.1:5000/">Home</a></br>
       <a href="http://127.0.0.1:5000/overallrecords">CLMN Overall Records</a></br>
       <a href="http://127.0.0.1:5000/teamsummary">CLMN Team Summary Stats</a></br>
       <a href="http://127.0.0.1:5000/playersummary">CLMN Player Summary Stats</a></br>
     </p>
+    
         {% for table in tables %}
                     {{titles[loop.index]}}
                     {{ table|safe }}
