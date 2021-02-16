@@ -6,7 +6,7 @@ import time
 
 
 directory = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
-#directory = 'C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/'
+
 
 playerli = []
 
@@ -39,17 +39,17 @@ teamsummary
 teamsummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNTeamSummary.csv', sep=';', encoding='utf-8',index=False)
 
 #game summary
-gameresults = teamsummary[['color','Game','Result','team name','Week Number','Series Number','Count']]
+gameresults = teamsummary[['color','Game','Result','team name','Week Number','Series Number','Count','League']]
 
 #get unique combinations
-series_matchup = gameresults[['color','team name','Week Number','Series Number']].value_counts().reset_index(name='Games In Series')
+series_matchup = gameresults[['color','team name','Week Number','Series Number','League']].value_counts().reset_index(name='Games In Series')
 
 #calculate wins for each combination
-blue_wins = gameresults[['color','team name','Week Number','Series Number']].loc[(gameresults["Result"]=="Win") & (gameresults["color"]=="blue")].value_counts().reset_index(name='Blue Match Wins')
-orange_wins = gameresults[['color','team name','Week Number','Series Number']].loc[(gameresults["Result"]=="Win") & (gameresults["color"]=="orange")].value_counts().reset_index(name='Orange Match Wins')
+blue_wins = gameresults[['color','team name','Week Number','Series Number','League']].loc[(gameresults["Result"]=="Win") & (gameresults["color"]=="blue")].value_counts().reset_index(name='Blue Match Wins')
+orange_wins = gameresults[['color','team name','Week Number','Series Number','League']].loc[(gameresults["Result"]=="Win") & (gameresults["color"]=="orange")].value_counts().reset_index(name='Orange Match Wins')
 #join back to store result 
-series_matchup = pd.merge(series_matchup,blue_wins,how="left" ,on=['Week Number','Series Number'])
-series_matchup = pd.merge(series_matchup,orange_wins,how="left" ,on=['Week Number','Series Number'])
+series_matchup = pd.merge(series_matchup,blue_wins,how="left" ,on=['Week Number','Series Number','League'])
+series_matchup = pd.merge(series_matchup,orange_wins,how="left" ,on=['Week Number','Series Number','League'])
 
 #fill in NaN with 0
 series_matchup['Blue Match Wins'] = series_matchup['Blue Match Wins'].fillna(0)
@@ -64,10 +64,10 @@ series_matchup['Series Loss Count'] = np.where(series_matchup['color_x'] != seri
 
 #Add rows to account for forfeits. Each series forfeit needs two rows, 1 for winning team, 1 for losing team.
 forfeits = []
-forfeits.append(['blue','BLOOMINGTON','Week 3','Series 4',0,'blue','BLOOMINGTON',0.0,'orange','ST. PAUL',0,'blue',1,0])
-forfeits.append(['orange','ST. PAUL','Week 3','Series 4',0,'orange','ST. PAUL',0.0,'blue','BLOOMINGTON',0,'blue',0,1])
-forfeits.append(['blue','ST. CLOUD','Week 4','Series 1',0,'blue','ST. CLOUD',0.0,'orange','HIBBING',0,'blue',1,0])
-forfeits.append(['orange','HIBBING','Week 4','Series 1',0,'orange','HIBBING',0.0,'blue','ST. CLOUD',0,'blue',0,1])
+forfeits.append(['blue','BLOOMINGTON','Week 3','Series 4','CLMN',0,'blue','BLOOMINGTON',0.0,'orange','ST. PAUL',0,'blue',1,0])
+forfeits.append(['orange','ST. PAUL','Week 3','Series 4','CLMN',0,'orange','ST. PAUL',0.0,'blue','BLOOMINGTON',0,'blue',0,1])
+forfeits.append(['blue','ST. CLOUD','Week 4','Series 1','CLMN',0,'blue','ST. CLOUD',0.0,'orange','HIBBING',0,'blue',1,0])
+forfeits.append(['orange','HIBBING','Week 4','Series 1','CLMN',0,'orange','HIBBING',0.0,'blue','ST. CLOUD',0,'blue',0,1])
 #forfeits
 
 series_matchup = series_matchup.append(pd.DataFrame(forfeits, columns=series_matchup.columns),ignore_index=True)
@@ -79,7 +79,7 @@ series_matchup = series_matchup.groupby("team name_x")['Series Win Count','Serie
 series_matchup
 
 #write overall to csv
-series_matchup.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNSeriesRecord.csv', sep=';', encoding='utf-8',index=False)
+series_matchup.to_csv('C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNSeriesRecord.csv', sep=';', encoding='utf-8',index=False)
 
 
 playersummary = pd.merge(playersummary, gameresults, on=['color', 'Game'])
