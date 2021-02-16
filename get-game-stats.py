@@ -4,6 +4,7 @@ import os
 import requests
 import time
 from download import download_file
+import ast
 
 # all of my available replays
 # https://ballchasing.com/?title=&player-name=pcmcd&season=&min-rank=&max-rank=&map=&replay-after=&replay-before=&upload-after=&upload-before=
@@ -18,9 +19,9 @@ for line in lines:
         pass
     else:
         #append row to list of lists
-        urls.append(line)
+        urls.append(ast.literal_eval(line))
+#print(urls)
 
-print(urls)
 
 #initalize summary dataframes
 
