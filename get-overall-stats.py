@@ -79,7 +79,7 @@ series_matchup = series_matchup.groupby("team name_x")['Series Win Count','Serie
 series_matchup
 
 #write overall to csv
-series_matchup.to_csv('C:/Users/mcdan/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNSeriesRecord.csv', sep=';', encoding='utf-8',index=False)
+series_matchup.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNSeriesRecord.csv', sep=';', encoding='utf-8',index=False)
 
 
 playersummary = pd.merge(playersummary, gameresults, on=['color', 'Game'])
