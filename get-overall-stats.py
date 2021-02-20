@@ -34,7 +34,7 @@ for filename in os.listdir(directory):
         continue
 teamsummary = pd.concat(teamli, axis=0, ignore_index=True)
 teamsummary['Count'] = 1
-teamsummary
+teamsummary.loc[teamsummary['team name']=='MAULERS']
 #write overall to csv
 teamsummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNTeamSummary.csv', sep=';', encoding='utf-8',index=False)
 
