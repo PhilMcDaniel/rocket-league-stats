@@ -111,3 +111,13 @@ playersummary.rename(columns={'team name_y':'team name'},inplace=True)
 playersummary
 #write overall to csv
 playersummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNPlayerSummary.csv', sep=';', encoding='utf-8',index=False)
+
+#regular season games played
+regularseasonplayergamesplayed = playersummary.loc[playersummary['Match Type']=='Regular Season']
+#count distinct "game"
+regularseasonplayergamesplayed = regularseasonplayergamesplayed.groupby(['player name']).Game.nunique().reset_index().sort_values(by=['player name'],ascending=True)
+#name the new column
+regularseasonplayergamesplayed.rename(columns={'Game':'Games Played'},inplace=True)
+regularseasonplayergamesplayed
+#write overall to csv
+regularseasonplayergamesplayed.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNRegularSeasonPlayerGamesPlayed.csv', sep=';', encoding='utf-8',index=False)

@@ -48,7 +48,9 @@ for url in urls:
          ,playerdata['player name'].str.upper() == "TIBBLE TOT"
          ,playerdata['player name'].str.upper() == "CZCHR."
          ,playerdata['player name'].str.upper() == "KHARON (JUST DRANK REDBULL)"
+         ,playerdata['player name'].str.upper() == "KHARON"
          ,playerdata['player name'].str.upper() == "ANGELMXB"
+         ,playerdata['player name'].str.upper() == "DCURT-"
          ,True
     ]
     playeroutputs = [
@@ -61,7 +63,9 @@ for url in urls:
         ,'tibbles'
         ,'CzechR.'
         ,'Kharon'
+        ,'Kharon'
         ,'XBAgent1'
+        ,'DcuRt'
         ,playerdata['player name']
     ]
     
