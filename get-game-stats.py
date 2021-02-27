@@ -49,8 +49,10 @@ for url in urls:
          ,playerdata['player name'].str.upper() == "CZCHR."
          ,playerdata['player name'].str.upper() == "KHARON (JUST DRANK REDBULL)"
          ,playerdata['player name'].str.upper() == "KHARON"
+         ,playerdata['player name'].str.upper() == "KHARON (DRANK REDBULL)"
          ,playerdata['player name'].str.upper() == "ANGELMXB"
          ,playerdata['player name'].str.upper() == "DCURT-"
+         ,playerdata['player name'].str.upper() == "NOHEADTOAST"
          ,True
     ]
     playeroutputs = [
@@ -64,8 +66,10 @@ for url in urls:
         ,'CzechR.'
         ,'Kharon'
         ,'Kharon'
+        ,'Kharon'
         ,'XBAgent1'
         ,'DcuRt'
+        ,'ToastSlow'
         ,playerdata['player name']
     ]
     
@@ -105,7 +109,7 @@ for url in urls:
 
     #override team names for consistency
     teaminputs = [
-         teamdata['team name'].str.upper() == "DULUTH", teamdata['team name'].str.upper() == 'SPIRIT'
+         teamdata['team name'].str.upper() == "DULUTH", teamdata['team name'].str.upper() == 'SPIRIT', teamdata['team name'].str.upper() == 'SPIRITS'
         ,teamdata['team name'].str.upper() == "ROCHESTER", teamdata['team name'].str.upper() == 'RIFF'
         ,teamdata['team name'].str.upper() == "MINNETONKA", teamdata['team name'].str.upper() == 'BONZERS'
         ,teamdata['team name'].str.upper() == "HIBBING", teamdata['team name'].str.upper() == 'WARDENS'
@@ -118,7 +122,7 @@ for url in urls:
         ,True
     ]
     teamoutputs = [
-        "DULUTH","DULUTH"
+        "DULUTH","DULUTH","DULUTH"
         ,"ROCHESTER","ROCHESTER"
         ,"MINNETONKA","MINNETONKA"
         ,"HIBBING","HIBBING"
