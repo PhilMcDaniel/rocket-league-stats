@@ -4,9 +4,9 @@ import pandas as pd
 app = Flask(__name__)
 
 #get dataframe with data
-player_summary = pd.read_csv(".\\stat_files\\summary\\CLMNPlayerSummary.csv", sep=';')
+player_summary = pd.read_csv(".\\stat_files\\summary\\CLMNRegularSeasonOverallPlayerSummary.csv", sep=';')
 overall_records = pd.read_csv(".\\stat_files\\summary\\CLMNSeriesRecord.csv", sep=';')
-team_summary = pd.read_csv(".\\stat_files\\summary\\CLMNTeamSummary.csv", sep=';')
+team_summary = pd.read_csv(".\\stat_files\\summary\\CLMNRegularSeasonOverallTeamSummary.csv", sep=';')
 player_games_played = pd.read_csv(".\\stat_files\\summary\\CLMNRegularSeasonPlayerGamesPlayed.csv", sep=';')
 
 @app.route("/")

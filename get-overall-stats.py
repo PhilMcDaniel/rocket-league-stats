@@ -34,7 +34,7 @@ for filename in os.listdir(directory):
         continue
 teamsummary = pd.concat(teamli, axis=0, ignore_index=True)
 teamsummary['Count'] = 1
-teamsummary.loc[teamsummary['team name']=='MAULERS']
+
 #write overall to csv
 teamsummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNTeamSummary.csv', sep=';', encoding='utf-8',index=False)
 
@@ -118,6 +118,18 @@ playersummary = playersummary[~playersummary['player name'].isin(players_to_remo
 playersummary
 #write overall to csv
 playersummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNPlayerSummary.csv', sep=';', encoding='utf-8',index=False)
+
+#get regular season rolled up player stats
+regularseasonplayeroverallsummary = playersummary[['team name','player name','score','goals','assists','shots']].loc[playersummary['Match Type']=='Regular Season']
+regularseasonplayeroverallsummary = regularseasonplayeroverallsummary.groupby(["team name","player name"])['score','goals','assists','shots'].mean().sort_values(by=['score','goals','assists','shots'],ascending=False).reset_index().round(2)
+regularseasonplayeroverallsummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNRegularSeasonOverallPlayerSummary.csv', sep=';', encoding='utf-8',index=False)
+#regularseasonplayeroverallsummary
+
+#get regular season rolled up team stats
+regularseasonteamoverallsummary = teamsummary[['team name','score','goals','assists','shots']].loc[teamsummary['Match Type']=='Regular Season']
+regularseasonteamoverallsummary = regularseasonteamoverallsummary.groupby(["team name"])['score','goals','assists','shots'].mean().sort_values(by=['score','goals','assists','shots'],ascending=False).reset_index().round(2)
+regularseasonteamoverallsummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNRegularSeasonOverallTeamSummary.csv', sep=';', encoding='utf-8',index=False)
+regularseasonteamoverallsummary
 
 #regular season games played
 regularseasonplayergamesplayed = playersummary.loc[playersummary['Match Type']=='Regular Season']
