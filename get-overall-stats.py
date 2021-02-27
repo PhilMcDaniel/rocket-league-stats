@@ -68,9 +68,9 @@ forfeits.append(['blue','BLOOMINGTON','Week 3','Series 4','CLMN',0,'blue','BLOOM
 forfeits.append(['orange','ST. PAUL','Week 3','Series 4','CLMN',0,'orange','ST. PAUL',0.0,'blue','BLOOMINGTON',0,'blue',0,1])
 forfeits.append(['blue','ST. CLOUD','Week 4','Series 1','CLMN',0,'blue','ST. CLOUD',0.0,'orange','HIBBING',0,'blue',1,0])
 forfeits.append(['orange','HIBBING','Week 4','Series 1','CLMN',0,'orange','HIBBING',0.0,'blue','ST. CLOUD',0,'blue',0,1])
-#forfeits
 
 series_matchup = series_matchup.append(pd.DataFrame(forfeits, columns=series_matchup.columns),ignore_index=True)
+
 
 #roll up to 1 row per team with sum of wins/losses
 series_matchup = series_matchup.loc[series_matchup["Week Number"] !="Week 0"]
@@ -108,6 +108,13 @@ playersummary.rename(columns={'score_x':'score'},inplace=True)
 playersummary = playersummary.drop(columns='team name_x')
 #rename column team name_y to team name
 playersummary.rename(columns={'team name_y':'team name'},inplace=True)
+
+#remove players who have retired, or been dropped from CLMN
+players_to_remove = []
+players_to_remove.append("Thermal")
+#update dataframe to only include rows where the player name is not in the above list
+playersummary = playersummary[~playersummary['player name'].isin(players_to_remove)]
+
 playersummary
 #write overall to csv
 playersummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNPlayerSummary.csv', sep=';', encoding='utf-8',index=False)
