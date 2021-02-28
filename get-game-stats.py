@@ -46,6 +46,7 @@ for url in urls:
          ,playerdata['player name'].str.upper() == "KING WASTEE"
          ,playerdata['player name'].str.upper() == "EL BLOOP :D"
          ,playerdata['player name'].str.upper() == "TIBBLE TOT"
+         ,playerdata['player name'].str.upper() == "TIBBLE THOT"
          ,playerdata['player name'].str.upper() == "CZCHR."
          ,playerdata['player name'].str.upper() == "KHARON (JUST DRANK REDBULL)"
          ,playerdata['player name'].str.upper() == "KHARON"
@@ -62,6 +63,7 @@ for url in urls:
         ,'ItsNate'
         ,'RAPTOR Wastee'
         ,'El Bloop'
+        ,'tibbles'
         ,'tibbles'
         ,'CzechR.'
         ,'Kharon'
@@ -122,6 +124,36 @@ for url in urls:
         ,True
     ]
     teamoutputs = [
+        "SPIRIT","SPIRIT","SPIRIT"
+        ,"RIFF","RIFF"
+        ,"BONZERS","BONZERS"
+        ,"WARDENS","WARDENS"
+        ,"PRODIGIES","PRODIGIES"
+        ,"SOAR","SOAR","SOAR"
+        ,"KINGPINS","KINGPINS","KINGPINS"
+        ,"URSAS","URSAS","URSAS"
+        ,"FIRESTORM","FIRESTORM"
+        ,"BEAVERS","BEAVERS"
+        ,teamdata['team name']
+    ]
+    
+    teamdata['team name'] = np.select(teaminputs,teamoutputs)
+    
+    #Create franchise name column to allow rollups across leagues
+    teaminputs = [
+         teamdata['team name'].str.upper() == "DULUTH", teamdata['team name'].str.upper() == 'SPIRIT', teamdata['team name'].str.upper() == 'SPIRITS'
+        ,teamdata['team name'].str.upper() == "ROCHESTER", teamdata['team name'].str.upper() == 'RIFF'
+        ,teamdata['team name'].str.upper() == "MINNETONKA", teamdata['team name'].str.upper() == 'BONZERS'
+        ,teamdata['team name'].str.upper() == "HIBBING", teamdata['team name'].str.upper() == 'WARDENS'
+        ,teamdata['team name'].str.upper() == "MINNEAPOLIS", teamdata['team name'].str.upper() == 'PRODIGIES'
+        ,teamdata['team name'].str.upper() == "ST. CLOUD", teamdata['team name'].str.upper() == "ST CLOUD", teamdata['team name'].str.upper() == 'SOAR'
+        ,teamdata['team name'].str.upper() == "ST. PAUL", teamdata['team name'].str.upper() == "ST PAUL", teamdata['team name'].str.upper() == 'KINGPINS'
+        ,teamdata['team name'].str.upper() == "BLOOMINGTON", teamdata['team name'].str.upper() == 'URSAS', teamdata['team name'].str.upper() == 'BOOSTY BOYS' 
+        ,teamdata['team name'].str.upper() == "BURNSVILLE", teamdata['team name'].str.upper() == 'FIRESTORM'
+        ,teamdata['team name'].str.upper() == "BEMIDJI", teamdata['team name'].str.upper() == 'BEAVERS'
+        ,True
+    ]
+    teamoutputs = [
         "DULUTH","DULUTH","DULUTH"
         ,"ROCHESTER","ROCHESTER"
         ,"MINNETONKA","MINNETONKA"
@@ -135,8 +167,8 @@ for url in urls:
         ,teamdata['team name']
     ]
     
-    teamdata['team name'] = np.select(teaminputs,teamoutputs)
-    #teamdata
+    teamdata['franchise name'] = np.select(teaminputs,teamoutputs)
+
 
     #add column that has guid for game
     teamdata['Game'] = url[0][0]

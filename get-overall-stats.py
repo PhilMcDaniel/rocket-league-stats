@@ -39,10 +39,10 @@ teamsummary['Count'] = 1
 teamsummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNTeamSummary.csv', sep=';', encoding='utf-8',index=False)
 
 #game summary
-gameresults = teamsummary[['color','Game','Result','team name','Week Number','Series Number','Count','League']]
+gameresults = teamsummary[['color','Game','Result','franchise name','team name','Week Number','Series Number','Count','League']]
 
 #get unique combinations
-series_matchup = gameresults[['color','team name','Week Number','Series Number','League']].value_counts().reset_index(name='Games In Series')
+series_matchup = gameresults[['color','team name','franchise name','Week Number','Series Number','League']].value_counts().reset_index(name='Games In Series')
 
 #calculate wins for each combination
 blue_wins = gameresults[['color','team name','Week Number','Series Number','League']].loc[(gameresults["Result"]=="Win") & (gameresults["color"]=="blue")].value_counts().reset_index(name='Blue Match Wins')
@@ -64,18 +64,17 @@ series_matchup['Series Loss Count'] = np.where(series_matchup['color_x'] != seri
 
 #Add rows to account for forfeits. Each series forfeit needs two rows, 1 for winning team, 1 for losing team.
 forfeits = []
-forfeits.append(['blue','BLOOMINGTON','Week 3','Series 4','CLMN',0,'blue','BLOOMINGTON',0.0,'orange','ST. PAUL',0,'blue',1,0])
-forfeits.append(['orange','ST. PAUL','Week 3','Series 4','CLMN',0,'orange','ST. PAUL',0.0,'blue','BLOOMINGTON',0,'blue',0,1])
-forfeits.append(['blue','ST. CLOUD','Week 4','Series 1','CLMN',0,'blue','ST. CLOUD',0.0,'orange','HIBBING',0,'blue',1,0])
-forfeits.append(['orange','HIBBING','Week 4','Series 1','CLMN',0,'orange','HIBBING',0.0,'blue','ST. CLOUD',0,'blue',0,1])
-
+forfeits.append(['blue','URSAS','BLOOMINGTON','Week 3','Series 4','CLMN',0,'blue','URSAS',0.0,'orange','KINGPINS',0,'blue',1,0])
+forfeits.append(['orange','KINGPINS','ST. PAUL','Week 3','Series 4','CLMN',0,'orange','KINGPINS',0.0,'blue','URSAS',0,'blue',0,1])
+forfeits.append(['blue','SOAR','ST. CLOUD','Week 4','Series 1','CLMN',0,'blue','SOAR',0.0,'orange','WARDENS',0,'blue',1,0])
+forfeits.append(['orange','WARDENS','HIBBING','Week 4','Series 1','CLMN',0,'orange','WARDENS',0.0,'blue','SOAR',0,'blue',0,1])
 series_matchup = series_matchup.append(pd.DataFrame(forfeits, columns=series_matchup.columns),ignore_index=True)
 
 
 #roll up to 1 row per team with sum of wins/losses
 series_matchup = series_matchup.loc[series_matchup["Week Number"] !="Week 0"]
 
-series_matchup = series_matchup.groupby("team name_x")['Series Win Count','Series Loss Count'].sum().sort_values(by=['Series Win Count'],ascending=False).reset_index()
+series_matchup = series_matchup.groupby(['franchise name',"team name_x"])['Series Win Count','Series Loss Count'].sum().sort_values(by=['Series Win Count'],ascending=False).reset_index()
 series_matchup
 
 #write overall to csv
@@ -120,21 +119,23 @@ playersummary
 playersummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNPlayerSummary.csv', sep=';', encoding='utf-8',index=False)
 
 #get regular season rolled up player stats
-regularseasonplayeroverallsummary = playersummary[['team name','player name','score','goals','assists','shots']].loc[playersummary['Match Type']=='Regular Season']
-regularseasonplayeroverallsummary = regularseasonplayeroverallsummary.groupby(["team name","player name"])['score','goals','assists','shots'].mean().sort_values(by=['score','goals','assists','shots'],ascending=False).reset_index().round(2)
+regularseasonplayeroverallsummary = playersummary[['franchise name','team name','player name','score','goals','assists','shots']].loc[playersummary['Match Type']=='Regular Season']
+regularseasonplayeroverallsummary = regularseasonplayeroverallsummary.groupby(['franchise name',"team name","player name"])['score','goals','assists','shots'].mean().sort_values(by=['score','goals','assists','shots'],ascending=False).reset_index().round(2)
 regularseasonplayeroverallsummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNRegularSeasonOverallPlayerSummary.csv', sep=';', encoding='utf-8',index=False)
 #regularseasonplayeroverallsummary
 
 #get regular season rolled up team stats
-regularseasonteamoverallsummary = teamsummary[['team name','score','goals','assists','shots']].loc[teamsummary['Match Type']=='Regular Season']
-regularseasonteamoverallsummary = regularseasonteamoverallsummary.groupby(["team name"])['score','goals','assists','shots'].mean().sort_values(by=['score','goals','assists','shots'],ascending=False).reset_index().round(2)
+regularseasonteamoverallsummary = teamsummary[['franchise name','team name','score','goals','assists','shots']].loc[teamsummary['Match Type']=='Regular Season']
+regularseasonteamoverallsummary = regularseasonteamoverallsummary.groupby(['franchise name',"team name"])['score','goals','assists','shots'].mean().sort_values(by=['score','goals','assists','shots'],ascending=False).reset_index().round(2)
 regularseasonteamoverallsummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNRegularSeasonOverallTeamSummary.csv', sep=';', encoding='utf-8',index=False)
 regularseasonteamoverallsummary
 
 #regular season games played
 regularseasonplayergamesplayed = playersummary.loc[playersummary['Match Type']=='Regular Season']
 #count distinct "game"
-regularseasonplayergamesplayed = regularseasonplayergamesplayed.groupby(['player name']).Game.nunique().reset_index().sort_values(by=['player name'],ascending=True)
+regularseasonplayergamesplayed = regularseasonplayergamesplayed.groupby(['player name']).Game.nunique().reset_index()
+#order data by player name ignoring "case"
+regularseasonplayergamesplayed = regularseasonplayergamesplayed.iloc[regularseasonplayergamesplayed['player name'].str.lower().argsort()]
 #name the new column
 regularseasonplayergamesplayed.rename(columns={'Game':'Games Played'},inplace=True)
 regularseasonplayergamesplayed
