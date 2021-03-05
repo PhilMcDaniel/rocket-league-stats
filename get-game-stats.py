@@ -54,6 +54,17 @@ for url in urls:
          ,playerdata['player name'].str.upper() == "ANGELMXB"
          ,playerdata['player name'].str.upper() == "DCURT-"
          ,playerdata['player name'].str.upper() == "NOHEADTOAST"
+         ,playerdata['player name'].str.upper() == "PACE. 1/10"
+         ,playerdata['player name'].str.upper() == "MN | PACE."
+         ,playerdata['player name'].str.upper() == "DAL | TKD247"
+         ,playerdata['player name'].str.upper() == "FANTASTIC MR AMBROSIA"
+         ,playerdata['player name'].str.upper() == "DJCJ (NEW CONTROLLER)"
+         ,playerdata['player name'].str.upper() == "JEDI PADAWAN TIBBLE THOT"
+         ,playerdata['player name'].str.upper() == "AMBROSIA277"
+         ,playerdata['player name'].str.upper() == "CHIK'NDINONUGGIEZ"
+         ,playerdata['player name'].str.upper() == "CALSTER | POWER WASHED"
+         ,playerdata['player name'].str.upper() == "CALSTER | SPACE HEATER"
+         ,playerdata['player name'].str.upper() == "VELTREE"
          ,True
     ]
     playeroutputs = [
@@ -72,6 +83,17 @@ for url in urls:
         ,'XBAgent1'
         ,'DcuRt'
         ,'ToastSlow'
+        ,'Pace.'
+        ,'Pace.'
+        ,'Tkd247'
+        ,'ambrosia'
+        ,'DJCJ.'
+        ,'tibbles'
+        ,'ambrosia'
+        ,"Chik'n"
+        ,'Calster'
+        ,'Calster'
+        ,'Veltri'
         ,playerdata['player name']
     ]
     
