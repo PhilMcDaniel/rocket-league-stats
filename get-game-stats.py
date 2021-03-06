@@ -127,12 +127,15 @@ for url in urls:
 
     teamdata = pd.read_csv(teamfile, sep=';')
 
+    #add column for league
+    teamdata['League'] = url[5][0]
+
     #add column to add team names for my team and opponents
     #teamdata['Team'] = np.where(teamdata['color'] != mycolor,'Opponent','Rochester Riff')
 
 
     #override team names for consistency
-    teaminputs = [
+    clmn_teaminputs = [
          teamdata['team name'].str.upper() == "DULUTH", teamdata['team name'].str.upper() == 'SPIRIT', teamdata['team name'].str.upper() == 'SPIRITS'
         ,teamdata['team name'].str.upper() == "ROCHESTER", teamdata['team name'].str.upper() == 'RIFF'
         ,teamdata['team name'].str.upper() == "MINNETONKA", teamdata['team name'].str.upper() == 'BONZERS'
@@ -145,7 +148,7 @@ for url in urls:
         ,teamdata['team name'].str.upper() == "BEMIDJI", teamdata['team name'].str.upper() == 'BEAVERS'
         ,True
     ]
-    teamoutputs = [
+    clmn_teamoutputs = [
         "SPIRIT","SPIRIT","SPIRIT"
         ,"RIFF","RIFF"
         ,"BONZERS","BONZERS"
@@ -158,38 +161,70 @@ for url in urls:
         ,"BEAVERS","BEAVERS"
         ,teamdata['team name']
     ]
+
     
-    teamdata['team name'] = np.select(teaminputs,teamoutputs)
-    
-    #Create franchise name column to allow rollups across leagues
-    teaminputs = [
-         teamdata['team name'].str.upper() == "DULUTH", teamdata['team name'].str.upper() == 'SPIRIT', teamdata['team name'].str.upper() == 'SPIRITS'
-        ,teamdata['team name'].str.upper() == "ROCHESTER", teamdata['team name'].str.upper() == 'RIFF'
-        ,teamdata['team name'].str.upper() == "MINNETONKA", teamdata['team name'].str.upper() == 'BONZERS'
-        ,teamdata['team name'].str.upper() == "HIBBING", teamdata['team name'].str.upper() == 'WARDENS'
-        ,teamdata['team name'].str.upper() == "MINNEAPOLIS", teamdata['team name'].str.upper() == 'PRODIGIES'
-        ,teamdata['team name'].str.upper() == "ST. CLOUD", teamdata['team name'].str.upper() == "ST CLOUD", teamdata['team name'].str.upper() == 'SOAR'
-        ,teamdata['team name'].str.upper() == "ST. PAUL", teamdata['team name'].str.upper() == "ST PAUL", teamdata['team name'].str.upper() == 'KINGPINS'
-        ,teamdata['team name'].str.upper() == "BLOOMINGTON", teamdata['team name'].str.upper() == 'URSAS', teamdata['team name'].str.upper() == 'BOOSTY BOYS' 
-        ,teamdata['team name'].str.upper() == "BURNSVILLE", teamdata['team name'].str.upper() == 'FIRESTORM'
-        ,teamdata['team name'].str.upper() == "BEMIDJI", teamdata['team name'].str.upper() == 'BEAVERS'
+    mncs_teaminputs = [
+         teamdata['team name'].str.upper() == "DULUTH", teamdata['team name'].str.upper() == 'SUPERIORS'
+        ,teamdata['team name'].str.upper() == "ROCHESTER", teamdata['team name'].str.upper() == 'RHYTHM'
+        ,teamdata['team name'].str.upper() == "MINNETONKA", teamdata['team name'].str.upper() == 'BARONS'
+        ,teamdata['team name'].str.upper() == "HIBBING", teamdata['team name'].str.upper() == 'RANGERS'
+        ,teamdata['team name'].str.upper() == "MINNEAPOLIS", teamdata['team name'].str.upper() == 'MIRACLES'
+        ,teamdata['team name'].str.upper() == "ST. CLOUD", teamdata['team name'].str.upper() == "ST CLOUD", teamdata['team name'].str.upper() == 'FLYERS'
+        ,teamdata['team name'].str.upper() == "ST. PAUL", teamdata['team name'].str.upper() == "ST PAUL", teamdata['team name'].str.upper() == 'SENATORS'
+        ,teamdata['team name'].str.upper() == "BLOOMINGTON", teamdata['team name'].str.upper() == 'MAULERS'
+        ,teamdata['team name'].str.upper() == "BURNSVILLE", teamdata['team name'].str.upper() == 'INFERNO'
+        ,teamdata['team name'].str.upper() == "BEMIDJI", teamdata['team name'].str.upper() == 'LUMBERJACKS'
         ,True
     ]
-    teamoutputs = [
-        "DULUTH","DULUTH","DULUTH"
-        ,"ROCHESTER","ROCHESTER"
-        ,"MINNETONKA","MINNETONKA"
-        ,"HIBBING","HIBBING"
-        ,"MINNEAPOLIS","MINNEAPOLIS"
-        ,"ST. CLOUD","ST. CLOUD","ST. CLOUD"
-        ,"ST. PAUL","ST. PAUL","ST. PAUL"
-        ,"BLOOMINGTON","BLOOMINGTON","BLOOMINGTON"
-        ,"BURNSVILLE","BURNSVILLE"
-        ,"BEMIDJI","BEMIDJI"
+    mncs_teamoutputs = [
+        "SUPERIORS","SUPERIORS"
+        ,"RHYTHM","RHYTHM"
+        ,"BARONS","BARONS"
+        ,"RANGERS","RANGERS"
+        ,"MIRACLES","MIRACLES"
+        ,"FLYERS","FLYERS","FLYERS"
+        ,"SENATORS","SENATORS","SENATORS"
+        ,"MAULERS","MAULERS"
+        ,"INFERNO","INFERNO"
+        ,"LUMBERJACKS","LUMBERJACKS"
+        ,teamdata['team name']
+    ]
+
+    
+    if teamdata["League"][0]=='CLMN':
+        teamdata['team name'] = np.select(clmn_teaminputs,clmn_teamoutputs)
+    else:
+        teamdata['team name'] = np.select(mncs_teaminputs,mncs_teamoutputs)
+    
+    #Create franchise name column to allow rollups across leagues
+    franchiseinputs = [
+         teamdata['team name'].str.upper() == "DULUTH", teamdata['team name'].str.upper() == 'SPIRIT', teamdata['team name'].str.upper() == 'SPIRITS', teamdata['team name'].str.upper() == 'SUPERIORS'
+        ,teamdata['team name'].str.upper() == "ROCHESTER", teamdata['team name'].str.upper() == 'RIFF', teamdata['team name'].str.upper() == 'RHYTHM'
+        ,teamdata['team name'].str.upper() == "MINNETONKA", teamdata['team name'].str.upper() == 'BONZERS', teamdata['team name'].str.upper() == 'BARONS'
+        ,teamdata['team name'].str.upper() == "HIBBING", teamdata['team name'].str.upper() == 'WARDENS', teamdata['team name'].str.upper() == 'RANGERS'
+        ,teamdata['team name'].str.upper() == "MINNEAPOLIS", teamdata['team name'].str.upper() == 'PRODIGIES',teamdata['team name'].str.upper() == 'MIRACLES'
+        ,teamdata['team name'].str.upper() == "ST. CLOUD", teamdata['team name'].str.upper() == "ST CLOUD", teamdata['team name'].str.upper() == 'SOAR', teamdata['team name'].str.upper() == 'FLYERS'
+        ,teamdata['team name'].str.upper() == "ST. PAUL", teamdata['team name'].str.upper() == "ST PAUL", teamdata['team name'].str.upper() == 'KINGPINS', teamdata['team name'].str.upper() == 'SENATORS'
+        ,teamdata['team name'].str.upper() == "BLOOMINGTON", teamdata['team name'].str.upper() == 'URSAS', teamdata['team name'].str.upper() == 'BOOSTY BOYS', teamdata['team name'].str.upper() == 'MAULERS'
+        ,teamdata['team name'].str.upper() == "BURNSVILLE", teamdata['team name'].str.upper() == 'FIRESTORM', teamdata['team name'].str.upper() == 'INFERNO'
+        ,teamdata['team name'].str.upper() == "BEMIDJI", teamdata['team name'].str.upper() == 'BEAVERS', teamdata['team name'].str.upper() == 'LUMBERJACKS'
+        ,True
+    ]
+    franchiseoutputs = [
+        "DULUTH","DULUTH","DULUTH","DULUTH"
+        ,"ROCHESTER","ROCHESTER","ROCHESTER"
+        ,"MINNETONKA","MINNETONKA","MINNETONKA"
+        ,"HIBBING","HIBBING","HIBBING"
+        ,"MINNEAPOLIS","MINNEAPOLIS","MINNEAPOLIS"
+        ,"ST. CLOUD","ST. CLOUD","ST. CLOUD","ST. CLOUD"
+        ,"ST. PAUL","ST. PAUL","ST. PAUL","ST. PAUL"
+        ,"BLOOMINGTON","BLOOMINGTON","BLOOMINGTON","BLOOMINGTON"
+        ,"BURNSVILLE","BURNSVILLE","BURNSVILLE"
+        ,"BEMIDJI","BEMIDJI","BEMIDJI"
         ,teamdata['team name']
     ]
     
-    teamdata['franchise name'] = np.select(teaminputs,teamoutputs)
+    teamdata['franchise name'] = np.select(franchiseinputs,franchiseoutputs)
 
 
     #add column that has guid for game

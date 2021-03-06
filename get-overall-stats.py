@@ -9,7 +9,6 @@ directory = 'C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_f
 
 
 playerli = []
-
 # loop through player files and add to data frame
 for filename in os.listdir(directory):
     if filename.startswith("PLAYER_"):
@@ -23,7 +22,6 @@ playersummary = pd.concat(playerli, axis=0, ignore_index=True)
 
 
 teamli = []
-
 # loop through team files and add to data frame
 for filename in os.listdir(directory):
     if filename.startswith("TEAM_"):
@@ -34,7 +32,6 @@ for filename in os.listdir(directory):
         continue
 teamsummary = pd.concat(teamli, axis=0, ignore_index=True)
 teamsummary['Count'] = 1
-teamsummary.loc[teamsummary['League']=='MNCS']
 
 #write overall to csv
 teamsummary.to_csv('C:/Users/phil_/OneDrive/Documents/GitHub/rocket-league-stats/stat_files/summary/CLMNTeamSummary.csv', sep=';', encoding='utf-8',index=False)
