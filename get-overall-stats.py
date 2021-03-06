@@ -66,6 +66,8 @@ forfeits.append(['blue','URSAS','BLOOMINGTON','Week 3','Series 4','CLMN',0,'blue
 forfeits.append(['orange','KINGPINS','ST. PAUL','Week 3','Series 4','CLMN',0,'orange','KINGPINS',0.0,'blue','URSAS',0,'blue',0,1])
 forfeits.append(['blue','SOAR','ST. CLOUD','Week 4','Series 1','CLMN',0,'blue','SOAR',0.0,'orange','WARDENS',0,'blue',1,0])
 forfeits.append(['orange','WARDENS','HIBBING','Week 4','Series 1','CLMN',0,'orange','WARDENS',0.0,'blue','SOAR',0,'blue',0,1])
+forfeits.append(['blue','RIFF','ROCHESTER','Week 7','Series 5','CLMN',0,'blue','RIFF',0.0,'orange','SOAR',0,'blue',1,0])
+forfeits.append(['orange','SOAR','ST. CLOUD','Week 7','Series 5','CLMN',0,'orange','SOAR',0.0,'blue','RIFF',0,'blue',0,1])
 series_matchup = series_matchup.append(pd.DataFrame(forfeits, columns=series_matchup.columns),ignore_index=True)
 
 
