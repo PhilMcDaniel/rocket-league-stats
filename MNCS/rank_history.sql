@@ -21,8 +21,18 @@ SELECT DISTINCT
   ,season_id
   ,team_id
   ,0 week
-  ,1000 rank_delta
-  ,1000 rank_total
+  ,CASE 
+		WHEN league_name = 'mncs' THEN 1333 
+		WHEN league_name = 'clmn 1' THEN 1000 
+		WHEN league_name = 'clmn 2' THEN 667 
+		ELSE NULL 
+	END rank_delta
+  ,CASE 
+		WHEN league_name = 'mncs' THEN 1333 
+		WHEN league_name = 'clmn 1' THEN 1000 
+		WHEN league_name = 'clmn 2' THEN 667 
+		ELSE NULL 
+	END rank_total
 FROM
   `mnrl-269717.prod_stats.match_results`
 WHERE season_name = '3';
