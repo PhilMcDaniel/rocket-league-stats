@@ -1,13 +1,17 @@
 import numpy as np
+import pandas as pd
+import os,sys
+
+
 
 #import team data
-
-#calculate mean & stddev for goals & goals against for each team
+team_stats = pd.read_csv("personal-python/data.csv", sep=',')
+team_stats
 
 #generate a schedule of matches where everyone plays eachother twice
 
 #generate simulated values based on mean and stddev
-number_of_sims = 100000
+number_of_sims = 5
 
 goals_weight = 0.5
 goals_allowed_weight = 0.5
