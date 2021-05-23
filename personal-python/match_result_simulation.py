@@ -28,11 +28,11 @@ for team in teams:
 #print(match_list)
 
 #override here for single game sim
-#match_list=[['Rochester Riff','Rochester Rewind']]
+#match_list=[['Minneapolis Prodigies','Burnsville Firestorm']]
 
 
 #set number of games per match & weight for goals and goals allowed
-number_of_sims = 1000
+number_of_sims = 1000000
 
 goals_weight = .5
 goals_allowed_weight = .5
@@ -115,3 +115,4 @@ combined_data['Actual Minus Sim Match Wins'] = combined_data['Match Wins'] - com
 #order results
 combined_data = combined_data[['League','Season','Team Name','Match Wins','Match Losses','Game Wins','Game Losses','Game Win %','Sim Match Wins','Sim Match Losses','Sim Game Wins','Sim Game Losses','Sim Game Win %','Actual Minus Sim Match Wins','Actual Minus Sim Game Win %']].sort_values(["League","Season","Match Wins","Game Win %"],ascending=[True,True,False,False])
 combined_data
+combined_data.to_csv('personal-python/simulateddata.csv', sep=',', encoding='utf-8',index=False)
