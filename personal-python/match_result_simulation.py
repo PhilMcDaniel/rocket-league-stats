@@ -14,8 +14,8 @@ number_of_sims = 100000
 goals_weight = .5
 goals_allowed_weight = .5
 
-team1 = 'Bemidji Beavers'
-team2 = 'Bemidji Beavers'
+team1 = 'Rochester Riff'
+team2 = 'Bloomington Ursas'
 
 #get team 1 values
 team1_goals_mean = team_stats['Goals/Game'][team_stats["Team Name"] == team1].values[0]
@@ -40,7 +40,7 @@ team1_goal_estimate = (team1_goals * goals_weight) + (team2_goals_allowed * goal
 team2_goal_estimate = (team2_goals * goals_weight) + (team1_goals_allowed * goals_allowed_weight)
 
 #generate compare array with esimated goals to determine winner
-team1_result_wins = (team1_goal_estimate > team2_goals_allowed)
+team1_result_wins = (team1_goal_estimate > team2_goal_estimate)
 print(team1_result_wins)
 
 #count true/false values to determine wins/losses
