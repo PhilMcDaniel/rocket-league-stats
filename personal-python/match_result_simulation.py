@@ -32,7 +32,7 @@ for team in teams:
 
 
 #set number of games per match & weight for goals and goals allowed
-number_of_sims = 1000000
+number_of_matches = 1000
 
 goals_weight = .5
 goals_allowed_weight = .5
@@ -55,10 +55,10 @@ for match in match_list:
     team2_goals_allowed_stddev = team_stats['Std Dev Goals Against'][team_stats["Team Name"] == team2].values[0]
 
     #generate random data
-    team1_goals = np.random.normal(team1_goals_mean,team1_goals_stddev,number_of_sims)
-    team1_goals_allowed = np.random.normal(team1_goals_allowed_mean,team1_goals_allowed_stddev,number_of_sims)
-    team2_goals = np.random.normal(team2_goals_mean,team2_goals_stddev,number_of_sims)
-    team2_goals_allowed = np.random.normal(team2_goals_allowed_mean,team2_goals_allowed_stddev,number_of_sims)
+    team1_goals = np.random.normal(team1_goals_mean,team1_goals_stddev,number_of_matches)
+    team1_goals_allowed = np.random.normal(team1_goals_allowed_mean,team1_goals_allowed_stddev,number_of_matches)
+    team2_goals = np.random.normal(team2_goals_mean,team2_goals_stddev,number_of_matches)
+    team2_goals_allowed = np.random.normal(team2_goals_allowed_mean,team2_goals_allowed_stddev,number_of_matches)
 
     #weigh goals and goals against for opponent to get estimated goals for each team
     team1_goal_estimate = (team1_goals * goals_weight) + (team2_goals_allowed * goals_allowed_weight)
@@ -114,5 +114,5 @@ combined_data['Actual Minus Sim Match Wins'] = combined_data['Match Wins'] - com
 
 #order results
 combined_data = combined_data[['League','Season','Team Name','Match Wins','Match Losses','Game Wins','Game Losses','Game Win %','Sim Match Wins','Sim Match Losses','Sim Game Wins','Sim Game Losses','Sim Game Win %','Actual Minus Sim Match Wins','Actual Minus Sim Game Win %']].sort_values(["League","Season","Match Wins","Game Win %"],ascending=[True,True,False,False])
-combined_data
+combined_data.loc[combined_data["League"] == "clmn 1",['Team Name','Match Wins','Sim Match Wins','Actual Minus Sim Match Wins','Game Win %','Sim Game Win %','Actual Minus Sim Game Win %']]
 combined_data.to_csv('personal-python/simulateddata.csv', sep=',', encoding='utf-8',index=False)
