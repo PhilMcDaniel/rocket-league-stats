@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import os,sys
+import os,sys,math
 
 #import team data
 team_stats = pd.read_csv("personal-python/data.csv", sep=',')
@@ -28,11 +28,12 @@ for team in teams:
 #print(match_list)
 
 #override here for single game sim
-match_list=[['Minneapolis Prodigies','Burnsville Firestorm']]
+#match_list=[['Minneapolis Prodigies','Burnsville Firestorm']]
 
 
 #set number of games per match & weight for goals and goals allowed
-number_of_matches = 5
+number_of_games_per_match = 5
+game_wins_for_match_win = math.ceil(number_of_games_per_match/2)
 
 goals_weight = .5
 goals_allowed_weight = .5
@@ -55,10 +56,10 @@ for match in match_list:
     team2_goals_allowed_stddev = team_stats['Std Dev Goals Against'][team_stats["Team Name"] == team2].values[0]
 
     #generate random data
-    team1_goals = np.random.normal(team1_goals_mean,team1_goals_stddev,number_of_matches)
-    team1_goals_allowed = np.random.normal(team1_goals_allowed_mean,team1_goals_allowed_stddev,number_of_matches)
-    team2_goals = np.random.normal(team2_goals_mean,team2_goals_stddev,number_of_matches)
-    team2_goals_allowed = np.random.normal(team2_goals_allowed_mean,team2_goals_allowed_stddev,number_of_matches)
+    team1_goals = np.random.normal(team1_goals_mean,team1_goals_stddev,number_of_games_per_match)
+    team1_goals_allowed = np.random.normal(team1_goals_allowed_mean,team1_goals_allowed_stddev,number_of_games_per_match)
+    team2_goals = np.random.normal(team2_goals_mean,team2_goals_stddev,number_of_games_per_match)
+    team2_goals_allowed = np.random.normal(team2_goals_allowed_mean,team2_goals_allowed_stddev,number_of_games_per_match)
 
     #weigh goals and goals against for opponent to get estimated goals for each team
     team1_goal_estimate = (team1_goals * goals_weight) + (team2_goals_allowed * goals_allowed_weight)
@@ -66,31 +67,31 @@ for match in match_list:
 
     #generate compare array with esimated goals to determine winner
     team1_result_wins = (team1_goal_estimate > team2_goal_estimate)
-    print(team1_result_wins)
+    #print(team1_result_wins)
+    
     team1_game_wins = 0
     team1_game_losses = 0
-    while team1_game_wins < 3 or team1_game_losses < 3:
-        for games in team1_result_wins:
-            print (games)
-            if games == True:
-                team1_game_wins = team1_game_wins + 1
-            else:
-                team1_game_losses = team1_game_losses + 1
-            print(team1_game_wins,team1_game_losses)
+    #best of _ match functionality. loop through generated data, stopping once the game majority is reached
+    for games in team1_result_wins:
+        if team1_game_wins == game_wins_for_match_win or team1_game_losses == game_wins_for_match_win:
+            break
+        
+        if games == True:
+            team1_game_wins = team1_game_wins + 1
+        else:
+            team1_game_losses = team1_game_losses + 1
+    #print(team1_game_wins,team1_game_losses)
     
 
-    #count true/false values to determine wins/losses
-    team1_wins = np.count_nonzero(team1_result_wins)
-    team1_losses = np.size(team1_result_wins) - np.count_nonzero(team1_result_wins)
-
+    #calculate match winner/loser and add game stats to dictionary
     #show summarized totals throughout the simulated season
-    if team1_wins > team1_losses:
-        standings.update({team1:{"match wins":standings[team1]["match wins"]+1,"match losses":standings[team1]["match losses"],"game wins":standings[team1]["game wins"]+team1_wins,"game losses":standings[team1]["game losses"]+team1_losses}})
-        standings.update({team2:{"match losses":standings[team2]["match losses"]+1,"match wins":standings[team2]["match wins"],"game wins":standings[team2]["game wins"]+team1_losses,"game losses":standings[team2]["game losses"]+team1_wins}})
+    if team1_game_wins > team1_game_losses:
+        standings.update({team1:{"match wins":standings[team1]["match wins"]+1,"match losses":standings[team1]["match losses"],"game wins":standings[team1]["game wins"]+team1_game_wins,"game losses":standings[team1]["game losses"]+team1_game_losses}})
+        standings.update({team2:{"match losses":standings[team2]["match losses"]+1,"match wins":standings[team2]["match wins"],"game wins":standings[team2]["game wins"]+team1_game_losses,"game losses":standings[team2]["game losses"]+team1_game_wins}})
         #print(f"{team1} Wins, {team2} Loses")
-    if team1_losses >= team1_wins:
-        standings.update({team2:{"match wins":standings[team2]["match wins"]+1,"match losses":standings[team2]["match losses"],"game wins":standings[team2]["game wins"]+team1_losses,"game losses":standings[team2]["game losses"]+team1_wins}})
-        standings.update({team1:{"match losses":standings[team1]["match losses"]+1,"match wins":standings[team1]["match wins"],"game wins":standings[team1]["game wins"]+team1_wins,"game losses":standings[team1]["game losses"]+team1_losses}})
+    if team1_game_losses >= team1_game_wins:
+        standings.update({team2:{"match wins":standings[team2]["match wins"]+1,"match losses":standings[team2]["match losses"],"game wins":standings[team2]["game wins"]+team1_game_losses,"game losses":standings[team2]["game losses"]+team1_game_wins}})
+        standings.update({team1:{"match losses":standings[team1]["match losses"]+1,"match wins":standings[team1]["match wins"],"game wins":standings[team1]["game wins"]+team1_game_wins,"game losses":standings[team1]["game losses"]+team1_game_losses}})
         #print(f"{team2} Wins, {team1} Loses")
 
 
@@ -111,7 +112,6 @@ sorted_standings = sorted(standings, key=lambda x: (standings[x]['match wins'], 
 #    print(f"{team} | match({standings[team]['match wins']}-{standings[team]['match losses']}) game({standings[team]['game wins']}-{standings[team]['game losses']}) game win % ({standings[team]['game win %']})")
 
 #add simulated data to dataframe
-#team_stats = team_stats.append(standings,ignore_index=True,sort=False)
 sim_stats = pd.DataFrame.from_dict(standings,orient = 'index')
 sim_stats["Team Name"] = sim_stats.index
 sim_stats = sim_stats.rename(columns={"match wins":"Sim Match Wins","match losses":"Sim Match Losses","game wins":"Sim Game Wins","game losses":"Sim Game Losses","game win %":"Sim Game Win %"})
@@ -125,5 +125,7 @@ combined_data['Actual Minus Sim Match Wins'] = combined_data['Match Wins'] - com
 
 #order results
 combined_data = combined_data[['League','Season','Team Name','Match Wins','Match Losses','Game Wins','Game Losses','Game Win %','Sim Match Wins','Sim Match Losses','Sim Game Wins','Sim Game Losses','Sim Game Win %','Actual Minus Sim Match Wins','Actual Minus Sim Game Win %']].sort_values(["League","Season","Match Wins","Game Win %"],ascending=[True,True,False,False])
+#choose specific rows/columns
 combined_data.loc[combined_data["League"] == "clmn 1",['Team Name','Match Wins','Sim Match Wins','Actual Minus Sim Match Wins','Game Win %','Sim Game Win %','Actual Minus Sim Game Win %']]
+#store sim results back to csv
 combined_data.to_csv('personal-python/simulateddata.csv', sep=',', encoding='utf-8',index=False)
