@@ -30,9 +30,9 @@ for team in teams:
 #match_list=[['Minneapolis Prodigies','Burnsville Firestorm']]
 
 #set number of games per match & weight for goals and goals allowed
-number_of_games_per_match = 5
+number_of_games_per_match = 99
 game_wins_for_match_win = math.ceil(number_of_games_per_match/2)
-number_of_seasons_to_sim = 100
+number_of_seasons_to_sim = 1000
 
 goals_weight = .5
 goals_allowed_weight = .5
@@ -117,21 +117,23 @@ sim_stats = sim_stats.rename(columns={"match wins":"Sim Match Wins","match losse
 #combine original data with simulated data
 combined_data = team_stats.merge(sim_stats,on="Team Name")
 
-#calculate some deltas simmed vs actual
-combined_data['Actual Minus Sim Game Win %'] = combined_data['Game Win %'] - combined_data['Sim Game Win %']
-combined_data['Actual Minus Sim Match Wins'] = combined_data['Match Wins'] - combined_data['Sim Match Wins']
+
 combined_data['Number of Seasons Simulated'] = number_of_seasons_to_sim
 #add season sim average values
 combined_data['Average Sim Match Wins'] = combined_data["Sim Match Wins"]/combined_data["Number of Seasons Simulated"]
 combined_data['Average Sim Match Losses'] = combined_data["Sim Match Losses"]/combined_data["Number of Seasons Simulated"]
 combined_data['Average Sim Game Wins'] = combined_data["Sim Game Wins"]/combined_data["Number of Seasons Simulated"]
 combined_data['Average Sim Game Losses'] = combined_data["Sim Game Losses"]/combined_data["Number of Seasons Simulated"]
+
+#calculate some deltas simmed vs actual
+combined_data['Actual Minus Sim Game Win %'] = combined_data['Game Win %'] - combined_data['Sim Game Win %']
+combined_data['Actual Minus Sim Match Wins'] = combined_data['Match Wins'] - combined_data['Average Sim Match Wins']
 #this is the same as sim game win %
 #combined_data['Average Sim Game Win %'] = combined_data["Average Sim Game Wins"]*100/(combined_data["Average Sim Game Wins"]+combined_data["Average Sim Game Losses"])
 
 #order results
 combined_data = combined_data[['League','Season','Team Name','Match Wins','Match Losses','Game Wins','Game Losses','Game Win %','Sim Match Wins','Sim Match Losses','Sim Game Wins','Sim Game Losses','Sim Game Win %','Actual Minus Sim Match Wins','Actual Minus Sim Game Win %','Number of Seasons Simulated','Average Sim Match Wins','Average Sim Match Losses','Average Sim Game Wins','Average Sim Game Losses']].sort_values(["League","Season","Match Wins","Game Win %"],ascending=[True,True,False,False])
-#choose specific rows/columns
-combined_data.loc[combined_data["League"] == "clmn 1",['Team Name','Match Wins','Average Sim Match Wins','Average Sim Match Losses','Actual Minus Sim Match Wins','Game Win %','Sim Game Win %','Actual Minus Sim Game Win %']]
 #store sim results back to csv
 combined_data.to_csv('personal-python/simulateddata.csv', sep=',', encoding='utf-8',index=False)
+#choose specific rows/columns
+combined_data.loc[combined_data["League"] == "clmn 1",['Team Name','Match Wins','Average Sim Match Wins','Average Sim Match Losses','Actual Minus Sim Match Wins','Game Win %','Sim Game Win %','Actual Minus Sim Game Win %']]
