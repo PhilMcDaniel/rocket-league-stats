@@ -28,11 +28,11 @@ for team in teams:
 #print(match_list)
 
 #override here for single game sim
-#match_list=[['Minneapolis Prodigies','Burnsville Firestorm']]
+match_list=[['Minneapolis Prodigies','Burnsville Firestorm']]
 
 
 #set number of games per match & weight for goals and goals allowed
-number_of_matches = 1000
+number_of_matches = 5
 
 goals_weight = .5
 goals_allowed_weight = .5
@@ -66,7 +66,18 @@ for match in match_list:
 
     #generate compare array with esimated goals to determine winner
     team1_result_wins = (team1_goal_estimate > team2_goal_estimate)
-    #print(team1_result_wins)
+    print(team1_result_wins)
+    team1_game_wins = 0
+    team1_game_losses = 0
+    while team1_game_wins < 3 or team1_game_losses < 3:
+        for games in team1_result_wins:
+            print (games)
+            if games == True:
+                team1_game_wins = team1_game_wins + 1
+            else:
+                team1_game_losses = team1_game_losses + 1
+            print(team1_game_wins,team1_game_losses)
+    
 
     #count true/false values to determine wins/losses
     team1_wins = np.count_nonzero(team1_result_wins)
