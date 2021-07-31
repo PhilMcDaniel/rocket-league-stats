@@ -32,7 +32,8 @@ SELECT DISTINCT
   ,CASE 
 		WHEN league_name = 'mncs' THEN 1333 
 		WHEN league_name = 'clmn 1' THEN 1000 
-		WHEN league_name = 'clmn 2' THEN 667
+		WHEN league_name = 'clmn' THEN 1000
+        WHEN league_name = 'clmn 2' THEN 667
 		WHEN league_name = 'mnrs' THEN 667
 		ELSE NULL 
 	END rank_total
@@ -49,7 +50,7 @@ SELECT * FROM rank_history;
 
 SET weeknum = 1;
 --loop through weeks, inserting rank_history values
-WHILE weeknum<=(SELECT MAX(week) FROM `mnrl-269717.prod_stats.match_results` WHERE season_name = '4') DO
+WHILE weeknum<=(SELECT MAX(match_number) FROM `mnrl-269717.prod_stats.match_results` WHERE season_name = '4') DO
 
 INSERT INTO rank_history
 SELECT 
@@ -59,7 +60,7 @@ SELECT
     ,league_id
     ,season_id
     ,team_id
-    ,week
+    ,match_number as week
     ,rank_delta
     ,prev_rank_total + rank_delta as rank_total
 FROM(
@@ -74,7 +75,7 @@ FROM(
         AND o.team_id = rh.team_id
         AND rh.week = weeknum-1
     WHERE o.season_name = '4'
-    AND o.week = weeknum
+    AND o.match_number = weeknum
 );
 SET weeknum = weeknum+1;
 END WHILE;
@@ -94,4 +95,3 @@ CREATE OR REPLACE TABLE `mnrl-269717.prod_stats.rank_history`
 
 INSERT INTO `mnrl-269717.prod_stats.rank_history`
 SELECT * FROM rank_history
---SELECT * FROM `mnrl-269717.prod_stats.rank_history`
