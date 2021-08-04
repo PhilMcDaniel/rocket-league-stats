@@ -5,6 +5,15 @@ import csv
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import pyodbc
+import azure_config
+from datetime import datetime
+
+driver = azure_config.driver
+server = azure_config.server
+database = azure_config.database
+username = azure_config.username
+password = azure_config.password
 
 def form_url(platform,platformid):
     """Get the URL that needs to be parsed"""
@@ -48,7 +57,7 @@ def get_rank_from_api(url):
 
 
 #load csv to list
-with open('personal-python/league_player_ids.csv', newline='') as f:
+with open('league_player_ids.csv', newline='') as f:
     reader = csv.reader(f)
     data = list(reader)
 #remove index = 0 (headers)
@@ -83,6 +92,15 @@ df = pd.DataFrame(flat_player_ratings,columns = ['platform','player','playlist',
 #players = df['player'].unique()
 #len(players)
 #df['playlist'].unique()
+
+#write data to database
+with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
+    with conn.cursor() as cursor:
+        cursor.execute("UPDATE [dbo].[PlayerRank] SET [IsLatest] = 'N' WHERE [IsLatest] = 'Y'")
+        conn.commit()
+        for index, row in df.iterrows():
+            cursor.execute("INSERT INTO [dbo].[PlayerRank] ([ETL_DTM],[Platform],[Player_Name],[Playlist],[Rank],[Division],[MMR],[IsLatest]) values(?,?,?,?,?,?,?,?)",datetime.now(),row['platform'],row['player'],row['playlist'],row['rank'],row['division'],row['mmr'],'Y')
+        conn.commit()
 
 twosdf = df[df['playlist']=='Ranked Doubles 2v2'].sort_values(by='mmr', ascending=False)
 threesdf = df[df['playlist']=='Ranked Standard 3v3'].sort_values(by='mmr', ascending=False)

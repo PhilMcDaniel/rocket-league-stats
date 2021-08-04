@@ -136,3 +136,5 @@ vscode/
 8aee5a29-7792-4c86-8534-dce570ef214a-player.csv
 8aee5a29-7792-4c86-8534-dce570ef214a-team.csv
 stat_files/
+
+azure_config.py
