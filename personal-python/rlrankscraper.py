@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import pyodbc
 import azure_config
 from datetime import datetime
+import uuid
 
 driver = azure_config.driver
 server = azure_config.server
@@ -93,13 +94,16 @@ df = pd.DataFrame(flat_player_ratings,columns = ['platform','player','playlist',
 #len(players)
 #df['playlist'].unique()
 
+# uuid for batch_id
+batch_id = uuid.uuid4()
+
 #write data to database
 with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
     with conn.cursor() as cursor:
         cursor.execute("UPDATE [dbo].[PlayerRank] SET [IsLatest] = 'N' WHERE [IsLatest] = 'Y'")
         conn.commit()
         for index, row in df.iterrows():
-            cursor.execute("INSERT INTO [dbo].[PlayerRank] ([ETL_DTM],[Platform],[Player_Name],[Playlist],[Rank],[Division],[MMR],[IsLatest]) values(?,?,?,?,?,?,?,?)",datetime.now(),row['platform'],row['player'],row['playlist'],row['rank'],row['division'],row['mmr'],'Y')
+            cursor.execute("INSERT INTO [dbo].[PlayerRank] ([ETL_DTM],[Platform],[Player_Name],[Playlist],[Rank],[Division],[MMR],[IsLatest],[Batch_Id]) values(?,?,?,?,?,?,?,?,?)",datetime.now(),row['platform'],row['player'],row['playlist'],row['rank'],row['division'],row['mmr'],'Y',batch_id)
         conn.commit()
 
 twosdf = df[df['playlist']=='Ranked Doubles 2v2'].sort_values(by='mmr', ascending=False)
