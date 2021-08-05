@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "1EpVsvSHjtAA9TM//59DmpHWE8jLVhXss5HnmFLGmJC/WRHPeHpyvV7yXkWLNYuJdTKkV4rba0jdgEIX1bl+ZA==",
+  "success": true,
+  "projectFilePath": "c:\\Users\\mcdan\\OneDrive\\Documents\\GitHub\\rocket-league-stats\\personal-python\\azure\\DatabaseProjectRocketLeagueStats\\DatabaseProjectRocketLeagueStats.sqlproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mcdan\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.0\\microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "C:\\Users\\mcdan\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net46\\1.0.0\\microsoft.netframework.referenceassemblies.net46.1.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

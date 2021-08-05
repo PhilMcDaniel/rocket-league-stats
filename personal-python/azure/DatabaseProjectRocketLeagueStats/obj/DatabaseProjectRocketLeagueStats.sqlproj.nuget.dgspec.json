@@ -1,0 +1,45 @@
+{
+  "format": 1,
+  "restore": {
+    "c:\\Users\\mcdan\\OneDrive\\Documents\\GitHub\\rocket-league-stats\\personal-python\\azure\\DatabaseProjectRocketLeagueStats\\DatabaseProjectRocketLeagueStats.sqlproj": {}
+  },
+  "projects": {
+    "c:\\Users\\mcdan\\OneDrive\\Documents\\GitHub\\rocket-league-stats\\personal-python\\azure\\DatabaseProjectRocketLeagueStats\\DatabaseProjectRocketLeagueStats.sqlproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Users\\mcdan\\OneDrive\\Documents\\GitHub\\rocket-league-stats\\personal-python\\azure\\DatabaseProjectRocketLeagueStats\\DatabaseProjectRocketLeagueStats.sqlproj",
+        "projectName": "DatabaseProjectRocketLeagueStats",
+        "projectPath": "c:\\Users\\mcdan\\OneDrive\\Documents\\GitHub\\rocket-league-stats\\personal-python\\azure\\DatabaseProjectRocketLeagueStats\\DatabaseProjectRocketLeagueStats.sqlproj",
+        "packagesPath": "C:\\Users\\mcdan\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\mcdan\\OneDrive\\Documents\\GitHub\\rocket-league-stats\\personal-python\\azure\\DatabaseProjectRocketLeagueStats\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "C:\\Users\\mcdan\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net46"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net46": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net46": {
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.0, )"
+            }
+          }
+        }
+      }
+    }
+  }
+}

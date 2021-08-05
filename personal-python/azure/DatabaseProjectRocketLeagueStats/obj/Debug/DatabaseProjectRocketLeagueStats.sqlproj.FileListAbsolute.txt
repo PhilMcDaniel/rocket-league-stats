@@ -1,0 +1,10 @@
+c:\Users\mcdan\OneDrive\Documents\GitHub\rocket-league-stats\personal-python\azure\DatabaseProjectRocketLeagueStats\bin\Debug\DatabaseProjectRocketLeagueStats.dacpac
+c:\Users\mcdan\OneDrive\Documents\GitHub\rocket-league-stats\personal-python\azure\DatabaseProjectRocketLeagueStats\bin\Debug\DatabaseProjectRocketLeagueStats.dll
+c:\Users\mcdan\OneDrive\Documents\GitHub\rocket-league-stats\personal-python\azure\DatabaseProjectRocketLeagueStats\bin\Debug\DatabaseProjectRocketLeagueStats.pdb
+c:\Users\mcdan\OneDrive\Documents\GitHub\rocket-league-stats\personal-python\azure\DatabaseProjectRocketLeagueStats\obj\Debug\DatabaseProjectRocketLeagueStats.sqlprojAssemblyReference.cache
+c:\Users\mcdan\OneDrive\Documents\GitHub\rocket-league-stats\personal-python\azure\DatabaseProjectRocketLeagueStats\obj\Debug\Model.xml
+c:\Users\mcdan\OneDrive\Documents\GitHub\rocket-league-stats\personal-python\azure\DatabaseProjectRocketLeagueStats\obj\Debug\refactor.xml
+c:\Users\mcdan\OneDrive\Documents\GitHub\rocket-league-stats\personal-python\azure\DatabaseProjectRocketLeagueStats\obj\Debug\postdeploy.sql
+c:\Users\mcdan\OneDrive\Documents\GitHub\rocket-league-stats\personal-python\azure\DatabaseProjectRocketLeagueStats\obj\Debug\predeploy.sql
+c:\Users\mcdan\OneDrive\Documents\GitHub\rocket-league-stats\personal-python\azure\DatabaseProjectRocketLeagueStats\obj\Debug\DatabaseProjectRocketLeagueStats.dll
+c:\Users\mcdan\OneDrive\Documents\GitHub\rocket-league-stats\personal-python\azure\DatabaseProjectRocketLeagueStats\obj\Debug\DatabaseProjectRocketLeagueStats.pdb
