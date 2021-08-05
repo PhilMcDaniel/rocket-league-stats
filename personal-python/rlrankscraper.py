@@ -85,10 +85,10 @@ flat_player_ratings = []
 for player in player_ratings:
     #skip index 0 because it has player detail
     for playlist in player[1:]:
-        flat_player_ratings.append([player[0][0],player[0][2],playlist[0],playlist[1],playlist[2],playlist[3]])
+        flat_player_ratings.append([player[0][0],player[0][1],player[0][2],playlist[0],playlist[1],playlist[2],playlist[3]])
 
 
-df = pd.DataFrame(flat_player_ratings,columns = ['platform','player','playlist','rank','division','mmr'])
+df = pd.DataFrame(flat_player_ratings,columns = ['platform','platformplayerid','player','playlist','rank','division','mmr'])
 #audit checking how many were scraped
 #players = df['player'].unique()
 #len(players)
@@ -103,7 +103,7 @@ with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE=
         cursor.execute("UPDATE [dbo].[PlayerRank] SET [IsLatest] = 'N' WHERE [IsLatest] = 'Y'")
         conn.commit()
         for index, row in df.iterrows():
-            cursor.execute("INSERT INTO [dbo].[PlayerRank] ([ETL_DTM],[Platform],[Player_Name],[Playlist],[Rank],[Division],[MMR],[IsLatest],[Batch_Id]) values(?,?,?,?,?,?,?,?,?)",datetime.now(),row['platform'],row['player'],row['playlist'],row['rank'],row['division'],row['mmr'],'Y',batch_id)
+            cursor.execute("INSERT INTO [dbo].[PlayerRank] ([ETL_DTM],[Platform],[PlatformPlayer_Id],[Player_Name],[Playlist],[Rank],[Division],[MMR],[IsLatest],[Batch_Id]) values(?,?,?,?,?,?,?,?,?,?)",datetime.now(),row['platform'],row['platformplayerid'],row['player'],row['playlist'],row['rank'],row['division'],row['mmr'],'Y',batch_id)
         conn.commit()
 
 twosdf = df[df['playlist']=='Ranked Doubles 2v2'].sort_values(by='mmr', ascending=False)
