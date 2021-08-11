@@ -11,7 +11,8 @@ CREATE TABLE [dbo].[PlayerRank] (
     [IsLatest]     CHAR (1)      NULL,
     [Batch_Id]     UNIQUEIDENTIFIER NULL,
     PRIMARY KEY CLUSTERED ([PlayerRankId] ASC)
-);
+)
+WITH (DATA_COMPRESSION = ROW);
 
 
 GO
