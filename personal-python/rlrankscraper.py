@@ -51,14 +51,15 @@ def get_rank_from_api(url):
             rank = key['stats']['tier']['metadata']['name']
             division = key['stats']['division']['metadata']['name']
             mmr = key['stats']['rating']['value']
-            response_list.append([playlist,rank,division,mmr])
+            matchesplayed = key['stats']['matchesPlayed']['value']
+            response_list.append([playlist,rank,division,mmr,matchesplayed])
     
     return  response_list
 #get_rank_from_api(form_url('steam','76561198040589211'))
 
 
 #load csv to list
-with open('league_player_ids.csv', newline='') as f:
+with open('personal-python/league_player_ids.csv', newline='') as f:
     reader = csv.reader(f)
     data = list(reader)
 #remove index = 0 (headers)
@@ -85,10 +86,10 @@ flat_player_ratings = []
 for player in player_ratings:
     #skip index 0 because it has player detail
     for playlist in player[1:]:
-        flat_player_ratings.append([player[0][0],player[0][1],player[0][2],playlist[0],playlist[1],playlist[2],playlist[3]])
+        flat_player_ratings.append([player[0][0],player[0][1],player[0][2],playlist[0],playlist[1],playlist[2],playlist[3],playlist[4]])
 
 
-df = pd.DataFrame(flat_player_ratings,columns = ['platform','platformplayerid','player','playlist','rank','division','mmr'])
+df = pd.DataFrame(flat_player_ratings,columns = ['platform','platformplayerid','player','playlist','rank','division','mmr','matches'])
 #audit checking how many were scraped
 #players = df['player'].unique()
 #len(players)
@@ -103,7 +104,7 @@ with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE=
         cursor.execute("UPDATE [dbo].[PlayerRank] SET [IsLatest] = 'N' WHERE [IsLatest] = 'Y'")
         conn.commit()
         for index, row in df.iterrows():
-            cursor.execute("INSERT INTO [dbo].[PlayerRank] ([ETL_DTM],[Platform],[PlatformPlayer_Id],[Player_Name],[Playlist],[Rank],[Division],[MMR],[IsLatest],[Batch_Id]) values(?,?,?,?,?,?,?,?,?,?)",datetime.now(),row['platform'],row['platformplayerid'],row['player'],row['playlist'],row['rank'],row['division'],row['mmr'],'Y',batch_id)
+            cursor.execute("INSERT INTO [dbo].[PlayerRank] ([ETL_DTM],[Platform],[PlatformPlayer_Id],[Player_Name],[Playlist],[Rank],[Division],[MMR],[IsLatest],[Batch_Id],[MatchesPlayed]) values(?,?,?,?,?,?,?,?,?,?,?)",datetime.now(),row['platform'],row['platformplayerid'],row['player'],row['playlist'],row['rank'],row['division'],row['mmr'],'Y',batch_id,row['matches'])
         conn.commit()
 
 twosdf = df[df['playlist']=='Ranked Doubles 2v2'].sort_values(by='mmr', ascending=False)

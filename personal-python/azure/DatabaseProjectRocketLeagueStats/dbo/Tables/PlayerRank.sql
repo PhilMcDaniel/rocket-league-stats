@@ -10,6 +10,7 @@ CREATE TABLE [dbo].[PlayerRank] (
     [MMR]          INT           NULL,
     [IsLatest]     CHAR (1)      NULL,
     [Batch_Id]     UNIQUEIDENTIFIER NULL,
+    [MatchesPlayed] INT         NULL,
     PRIMARY KEY CLUSTERED ([PlayerRankId] ASC)
 )
 WITH (DATA_COMPRESSION = ROW);
