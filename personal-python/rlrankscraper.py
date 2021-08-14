@@ -9,6 +9,10 @@ import pyodbc
 import azure_config
 from datetime import datetime
 import uuid
+import time
+
+
+start = time.perf_counter()
 
 driver = azure_config.driver
 server = azure_config.server
@@ -106,6 +110,9 @@ with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE=
         for index, row in df.iterrows():
             cursor.execute("INSERT INTO [dbo].[PlayerRank] ([ETL_DTM],[Platform],[PlatformPlayer_Id],[Player_Name],[Playlist],[Rank],[Division],[MMR],[IsLatest],[Batch_Id],[MatchesPlayed]) values(?,?,?,?,?,?,?,?,?,?,?)",datetime.now(),row['platform'],row['platformplayerid'],row['player'],row['playlist'],row['rank'],row['division'],row['mmr'],'Y',batch_id,row['matches'])
         conn.commit()
+
+end = time.perf_counter()
+print(f"Total execution time: {round((end - start),2)} seconds")
 
 twosdf = df[df['playlist']=='Ranked Doubles 2v2'].sort_values(by='mmr', ascending=False)
 threesdf = df[df['playlist']=='Ranked Standard 3v3'].sort_values(by='mmr', ascending=False)
