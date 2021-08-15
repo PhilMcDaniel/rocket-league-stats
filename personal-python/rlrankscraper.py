@@ -7,7 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pyodbc
 import azure_config
-from datetime import datetime
+from datetime import datetime,date
 import uuid
 import time
 
@@ -102,7 +102,12 @@ df = pd.DataFrame(flat_player_ratings,columns = ['platform','platformplayerid','
 # uuid for batch_id
 batch_id = uuid.uuid4()
 
+end = time.perf_counter()
+duration = round((end-start),4)
+print(f"Total execution time: {duration} seconds")
+
 #write data to database
+#playerrank table
 with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
     with conn.cursor() as cursor:
         cursor.execute("UPDATE [dbo].[PlayerRank] SET [IsLatest] = 'N' WHERE [IsLatest] = 'Y'")
@@ -111,15 +116,19 @@ with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE=
             cursor.execute("INSERT INTO [dbo].[PlayerRank] ([ETL_DTM],[Platform],[PlatformPlayer_Id],[Player_Name],[Playlist],[Rank],[Division],[MMR],[IsLatest],[Batch_Id],[MatchesPlayed]) values(?,?,?,?,?,?,?,?,?,?,?)",datetime.now(),row['platform'],row['platformplayerid'],row['player'],row['playlist'],row['rank'],row['division'],row['mmr'],'Y',batch_id,row['matches'])
         conn.commit()
 
-end = time.perf_counter()
-print(f"Total execution time: {round((end - start),2)} seconds")
+#insert row into batch table
+with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
+    with conn.cursor() as cursor:
+        cursor.execute("INSERT INTO [dbo].[Batch] ([Batch_Id],[BatchDate],[BatchDurationSeconds]) values(?,?,?)",batch_id,date.today(),duration)
+        conn.commit()
 
-twosdf = df[df['playlist']=='Ranked Doubles 2v2'].sort_values(by='mmr', ascending=False)
-threesdf = df[df['playlist']=='Ranked Standard 3v3'].sort_values(by='mmr', ascending=False)
+
+#twosdf = df[df['playlist']=='Ranked Doubles 2v2'].sort_values(by='mmr', ascending=False)
+#threesdf = df[df['playlist']=='Ranked Standard 3v3'].sort_values(by='mmr', ascending=False)
 
 #dataviz
-ax = threesdf[['player','mmr']].head(50).plot.barh(x='player',y='mmr')
+#ax = threesdf[['player','mmr']].head(50).plot.barh(x='player',y='mmr')
 #invert so that y axis descends
-ax.invert_yaxis()
-plt.show()
+#ax.invert_yaxis()
+#plt.show()
 

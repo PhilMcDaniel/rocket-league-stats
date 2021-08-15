@@ -68,5 +68,6 @@
   </Target>
   <ItemGroup>
     <Build Include="dbo\Tables\PlayerRank.sql" />
+    <Build Include="dbo\Tables\Batch.sql" />
   </ItemGroup>
 </Project>
