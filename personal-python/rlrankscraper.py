@@ -36,28 +36,38 @@ def get_rank_from_api(url):
     ,'Referer': 'https://rocketleague.tracker.network/'
     ,'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
     }
-    api_response = requests.get(url,headers=headers)
-    api_response = api_response.json()
+    try:
+        api_response = requests.get(url,headers=headers)
+        api_response = api_response.json()
+    except requests.exceptions.RequestException as e:
+        print(e)
     
     #get user info
-    username = api_response['data']['platformInfo']['platformUserHandle']
-    platform = api_response['data']['platformInfo']['platformSlug']
-    platformid = api_response['data']['platformInfo']['platformUserIdentifier']
-    user_info = [platform,platformid,username]
-    response_list=[]
-    response_list.append(user_info)
+    try:
+        username = api_response['data']['platformInfo']['platformUserHandle']
+        platform = api_response['data']['platformInfo']['platformSlug']
+        platformid = api_response['data']['platformInfo']['platformUserIdentifier']
+        user_info = [platform,platformid,username]
+        response_list=[]
+        response_list.append(user_info)
+    except:
+        print(f'error getting platform info from JSON response for:{url}')
+    
     for key in api_response['data']['segments']:
         #lifetime doesn't have normal keys
-        if key['metadata']['name']=='Lifetime':
-            pass
-        else:
-            playlist = key['metadata']['name']
-            rank = key['stats']['tier']['metadata']['name']
-            division = key['stats']['division']['metadata']['name']
-            mmr = key['stats']['rating']['value']
-            matchesplayed = key['stats']['matchesPlayed']['value']
-            response_list.append([playlist,rank,division,mmr,matchesplayed])
-    
+        try:
+            if key['metadata']['name']=='Lifetime':
+                pass
+            else:
+                playlist = key['metadata']['name']
+                rank = key['stats']['tier']['metadata']['name']
+                division = key['stats']['division']['metadata']['name']
+                mmr = key['stats']['rating']['value']
+                matchesplayed = key['stats']['matchesPlayed']['value']
+                response_list.append([playlist,rank,division,mmr,matchesplayed])
+        except:
+            print(f'error getting player rank data for:{url}')
+
     return  response_list
 #get_rank_from_api(form_url('steam','76561198040589211'))
 
@@ -69,22 +79,20 @@ with open('personal-python/league_player_ids.csv', newline='') as f:
 #remove index = 0 (headers)
 data.pop(0)
 
-#loop through player id to scrape ranks
-player_ratings=[]
+#fully form URLs
+url_list = []
 for player in data:
     url=form_url(player[0],player[1])
-    #print(url)
+    url_list.append(url)
+
+#loop through list of urls using scraping function. store results in list of lists
+player_ratings=[]
+for url in url_list:
     try:
         player_ratings.append(get_rank_from_api(url))
     except:
         print(f"{player[0]}-{player[1]} was not found")
 
-#load ranks to dataframe
-#platform
-#player_ratings[0][0][0]
-
-#username
-#player_ratings[0][0][2]
 #flatten data so import to dataframe is smooth
 flat_player_ratings = []
 for player in player_ratings:
@@ -101,7 +109,6 @@ df = pd.DataFrame(flat_player_ratings,columns = ['platform','platformplayerid','
 
 # uuid for batch_id
 batch_id = uuid.uuid4()
-
 end = time.perf_counter()
 duration = round((end-start),4)
 print(f"Total execution time: {duration} seconds")
@@ -119,7 +126,7 @@ with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE=
 #insert row into batch table
 with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
     with conn.cursor() as cursor:
-        cursor.execute("INSERT INTO [dbo].[Batch] ([Batch_Id],[BatchDate],[BatchDurationSeconds]) values(?,?,?)",batch_id,date.today(),duration)
+        cursor.execute("INSERT INTO [dbo].[Batch] ([Batch_Id],[BatchDate],[ETL_DTM],[BatchDurationSeconds]) values(?,?,?,?)",batch_id,date.today(),datetime.now(),duration)
         conn.commit()
 
 
