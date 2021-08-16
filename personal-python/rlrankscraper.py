@@ -10,7 +10,7 @@ import azure_config
 from datetime import datetime,date
 import uuid
 import time
-
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 start = time.perf_counter()
 
@@ -85,13 +85,24 @@ for player in data:
     url=form_url(player[0],player[1])
     url_list.append(url)
 
-#loop through list of urls using scraping function. store results in list of lists
+#use threading to submit get requests and scrape data for all urls list of urls. store results in list of lists
 player_ratings=[]
-for url in url_list:
-    try:
-        player_ratings.append(get_rank_from_api(url))
-    except:
-        print(f"{player[0]}-{player[1]} was not found")
+def runner():
+    threads= []
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        for url in url_list:
+            try:
+                threads.append(executor.submit(get_rank_from_api, url))
+            except:
+                print("failed adding thread")
+        for task in as_completed(threads):
+            try:
+                player_ratings.append(task.result())
+            except:
+                print(f'failed storing thread result for:{url}')
+
+runner()
+
 
 #flatten data so import to dataframe is smooth
 flat_player_ratings = []
