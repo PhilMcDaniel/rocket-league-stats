@@ -89,7 +89,7 @@ for player in data:
 player_ratings=[]
 def runner():
     threads= []
-    with ThreadPoolExecutor(max_workers=5) as executor:
+    with ThreadPoolExecutor(max_workers=20) as executor:
         for url in url_list:
             try:
                 threads.append(executor.submit(get_rank_from_api, url))
