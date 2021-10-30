@@ -86,7 +86,7 @@ toml==0.10.2
 twilio==6.62.0
 typed-ast==1.4.1
 typing-extensions==3.7.4.3
-urllib3==1.26.2
+urllib3==1.26.5
 virtualenv==20.6.0
 Werkzeug==2.0.1
 wrapt==1.12.1
