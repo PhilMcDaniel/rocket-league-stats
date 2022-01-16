@@ -3,26 +3,27 @@ import seaborn as sn
 import matplotlib.pyplot as plt
 
 #read csv source file
-all_player_stats = pd.read_csv("MNCS/MNCS_S3_PlayerRatingData.csv", sep=',')
+all_player_stats = pd.read_csv("d:/Git/MNCS/rocket-league-stats/personal-python/s4_coeffs.csv", sep=',')
 #change data type to numeric so correlation works
-all_player_stats['Game Win %'] = all_player_stats['Game Win %'].str.replace('%','').astype(float)
+all_player_stats['Game Win %'] = all_player_stats['player game win %'].str.replace('%','').astype(float)
 
-MNCS_player_stats = all_player_stats[all_player_stats['League'] == 'mncs']
-CLMN1_player_stats = all_player_stats[all_player_stats['League'] == 'clmn 1']
-CLMN2_player_stats = all_player_stats[all_player_stats['League'] == 'clmn 2']
+MNCS_player_stats = all_player_stats[all_player_stats['league_name'] == 'mncs']
+CLMN_player_stats = all_player_stats[all_player_stats['league_name'] == 'clmn']
+MNRS_player_stats = all_player_stats[all_player_stats['league_name'] == 'mnrs']
 
 all_players_corrMatrix = all_player_stats.corr()
 MNCS_corrMatrix = MNCS_player_stats.corr()
-CLMN1_corrMatrix = CLMN1_player_stats.corr()
-CLMN2_corrMatrix = CLMN2_player_stats.corr()
+CLMN_corrMatrix = CLMN_player_stats.corr()
+MNRS_corrMatrix = MNRS_player_stats.corr()
 
-print(all_players_corrMatrix,MNCS_corrMatrix,CLMN1_corrMatrix,CLMN2_corrMatrix)
+print(MNRS_corrMatrix)
+#print(all_players_corrMatrix,MNCS_corrMatrix,CLMN_corrMatrix,MNRS_corrMatrix)
 
-sn.heatmap(all_players_corrMatrix, annot=True)
-plt.show()
-sn.heatmap(MNCS_corrMatrix, annot=True)
-plt.show()
-sn.heatmap(CLMN1_corrMatrix, annot=True)
-plt.show()
-sn.heatmap(CLMN2_corrMatrix, annot=True)
-plt.show()
+# sn.heatmap(all_players_corrMatrix, annot=True)
+# plt.show()
+# sn.heatmap(MNCS_corrMatrix, annot=True)
+# plt.show()
+# sn.heatmap(CLMN_corrMatrix, annot=True)
+# plt.show()
+# sn.heatmap(MNRS_corrMatrix, annot=True)
+# plt.show()
