@@ -62,7 +62,7 @@ pyasn1-modules==0.2.8
 PyAutoGUI==0.9.53
 pycparser==2.20
 PyGetWindow==0.0.9
-PyJWT==1.7.1
+PyJWT==2.4.0
 pylint==2.6.0
 PyMsgBox==1.0.9
 pyodbc==4.0.31
