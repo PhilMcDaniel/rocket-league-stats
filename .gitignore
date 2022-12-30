@@ -141,3 +141,4 @@ azure_config.py
 gcp_config.py
 valid-logic-327117-c65a61941ea8.json
 player_list.csv
+scraped_player_rankings.csv
