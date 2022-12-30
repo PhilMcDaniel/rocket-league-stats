@@ -52,10 +52,8 @@ result = get_rank_from_api(form_url('steam','76561198040589211'))
 
 #result[('76561198040589211', 'Snowday', '2022-12-30 12:07:56.773688')]
 
-#df = pd.DataFrame.from_dict(result)
-#df.head()
-
-#convert to dataframe that is flattened correctly
+df = pd.DataFrame.from_dict(result,orient='index' )
+df.head()
 
 #write to csv
 
