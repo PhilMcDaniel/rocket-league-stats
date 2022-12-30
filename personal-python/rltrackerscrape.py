@@ -47,8 +47,6 @@ def get_rank_from_api(url):
     return(data)
 
 result = get_rank_from_api(form_url('steam','76561198040589211'))
-
-
 #result[('76561198040589211', 'Snowday', '2022-12-30 12:07:56.773688')]
 
 df = pd.DataFrame.from_dict(result,orient='index').reset_index()
@@ -56,7 +54,8 @@ df = df.drop(columns=['level_0','level_1','level_2'])
 #df.head()
 
 #write to csv
-df.to_csv("scraped_player_rankings.csv",mode='w')
+#seeds the csv with headers. Append only later on
+df.to_csv("scraped_player_rankings.csv",mode='w',index_label='row')
 
 #read file of platform / platform id
 player_list = []
@@ -74,5 +73,27 @@ for player in player_list:
 
 #main program to run these methods
 for player in url_list:
-    print(player)
+    try:
+        result = get_rank_from_api(player)
+    except:
+        #some errors here we are ignoring
+        pass
+    df = pd.DataFrame.from_dict(result,orient='index').reset_index()
+    
+    try:
+        df = df.drop(columns=['level_0','level_1','level_2'])
+    except:
+        pass
+    #df.head()
+
+    #write to csv
+    df.to_csv("scraped_player_rankings.csv",mode='a',header=False,index_label='row')
+
+
 #dag
+
+#read csv
+df = pd.read_csv('scraped_player_rankings.csv')
+df.head(10)
+df = df[df['playlist_name']=='Ranked Standard 3v3'].sort_values('rating_value',ascending=False)
+df[['platform_handle','rank','division_name','rating_value']].head(30)
