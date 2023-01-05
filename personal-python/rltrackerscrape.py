@@ -16,12 +16,24 @@ def get_rank_from_api(url):
     headers = {
     'Accept': 'application/json, text/plain, */*'
     ,'Accept-Language': 'en'
+    ,'scheme': 'https'
     ,'DNT': '1'
     ,'Referer': 'https://rocketleague.tracker.network/'
     ,'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
     }
-    api_response = requests.get(url,headers=headers)
-    api_response = api_response.json()
+    try:
+        api_response = requests.get(url,headers=headers)
+        if api_response.status_code  == 403:
+            raise Exception("Reponse 403 : Forbidden")
+    except Exception as err:
+        print(f"Unexpected {err=}, {type(err)=}")
+        raise
+
+    try:
+        api_response = api_response.json()
+    except Exception as err:
+        print(f"Unexpected {err=}, {type(err)=}")
+        raise
 
     platform = api_response['data']['platformInfo']['platformSlug']
     platform_handle = api_response['data']['platformInfo']['platformUserHandle']
@@ -55,11 +67,11 @@ df = df.drop(columns=['level_0','level_1','level_2'])
 
 #write to csv
 #seeds the csv with headers. Append only later on
-df.to_csv("scraped_player_rankings.csv",mode='w',index_label='row')
+df.to_csv("output/scraped_player_rankings.csv",mode='w',index_label='row')
 
 #read file of platform / platform id
 player_list = []
-with open('personal-python/player_list.csv') as f:
+with open('personal-python/input/player_list.csv') as f:
     reader = csv.reader(f)
     player_list = list(reader)
 #remove index = 0 (headers)
@@ -87,13 +99,13 @@ for player in url_list:
     #df.head()
 
     #write to csv
-    df.to_csv("scraped_player_rankings.csv",mode='a',header=False,index_label='row')
+    df.to_csv("output/scraped_player_rankings.csv",mode='a',header=False,index_label='row')
 
 
 #dag
 
 #read csv
-df = pd.read_csv('scraped_player_rankings.csv')
+df = pd.read_csv('output/scraped_player_rankings.csv')
 df.head(10)
 df = df[df['playlist_name']=='Ranked Standard 3v3'].sort_values('rating_value',ascending=False)
 df[['platform_handle','rank','division_name','rating_value']].head(30)
