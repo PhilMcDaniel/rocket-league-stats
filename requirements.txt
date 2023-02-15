@@ -88,7 +88,7 @@ typed-ast==1.4.1
 typing-extensions==3.7.4.3
 urllib3==1.26.5
 virtualenv==20.6.0
-Werkzeug==2.0.1
+Werkzeug==2.2.3
 wrapt==1.12.1
 yarl==1.6.3
 yfinance==0.1.59
