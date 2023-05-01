@@ -1,4 +1,4 @@
-﻿adal==1.2.6
+adal==1.2.6
 aiohttp==3.7.4.post0
 appdirs==1.4.4
 astroid==2.4.2
@@ -23,7 +23,7 @@ discord==1.7.3
 discord.py==1.7.3
 distlib==0.3.1
 filelock==3.0.12
-Flask==2.0.1
+Flask==2.3.2
 google-api-core==2.0.1
 google-auth==2.1.0
 google-cloud-bigquery==2.26.0
