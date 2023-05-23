@@ -74,7 +74,7 @@ python-dateutil==2.8.1
 PyTweening==1.0.3
 pytz==2020.4
 regex==2020.11.13
-requests==2.26.0
+requests==2.31.0
 rsa==4.7.2
 s3transfer==0.4.2
 scipy==1.6.3
